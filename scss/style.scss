@@ -1,1 +1,169 @@
+// -----------------------------------------------------------------------------
+// This file contains All styles
+// -----------------------------------------------------------------------------
+
+// Bootstrap 5 styles
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+// Base styles
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0 auto;
+  padding: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+// Google Font
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap");
+
+// Typography variables
+$primary-font: "Anton", sans-serif;
+$secondary-font: "Manrope", sans-serif;
+
+// Color variables
+$primary-color: #000;
+$secondary-color: #7a7a7a;
+$highlight-color: #ffd15b;
+
+// Typography
+h1,
+h2,
+h4 {
+  font-family: $primary-font;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1 {
+  color: $highlight-color;
+  font-size: clamp(1.5rem, 4vw, 2.75rem);
+  line-height: 1.5;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h3 {
+  font-family: $secondary-font;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+p {
+  font-family: $secondary-font;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+form input {
+  font-family: $secondary-font;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+// Navigation
+nav {
+  position: absolute;
+  z-index: 10000;
+}
+
+.navbar {
+  padding: 3rem 0;
+}
+
+.navbar-brand {
+  margin: 0 auto;
+  @include media-breakpoint-up(sm) {
+    margin: initial;
+  }
+}
+
+// Header
+header {
+  background-image: url(../img/header/recipe@2x.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 667px;
+  position: relative;
+  z-index: 1000;
+  margin-top: -9rem;
+  overflow: hidden;
+
+  & > div {
+    z-index: 100;
+  }
+
+  &::before {
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    z-index: 10;
+  }
+
+  // Search bar
+  form {
+    position: relative;
+    align-items: center;
+  }
+
+  .form-control {
+    border: none;
+    border-radius: 0.625rem 0.625rem;
+    padding: 1rem 3.5rem 1rem 1rem;
+    font-size: 0.85rem;
+    text-overflow: ellipsis;
+
+    @include media-breakpoint-up(sm) {
+      padding: 1.5rem 1.5rem 1.5rem 2.1875rem;
+    }
+  }
+
+  .btn {
+    border-radius: 0.625rem 0.625rem;
+    position: absolute;
+    right: 0.75rem;
+    padding: 0;
+    height: 2rem;
+    width: 2rem;
+
+    @include media-breakpoint-up(sm) {
+      height: 3.25rem;
+      width: 3.25rem;
+    }
+
+    i {
+      padding: 0.85rem;
+      height: 2rem;
+      width: 2rem;
+      font-size: 1rem;
+
+      @include media-breakpoint-up(sm) {
+        font-size: 1.75rem;
+      }
+
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
