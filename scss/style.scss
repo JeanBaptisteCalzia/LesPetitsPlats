@@ -53,11 +53,31 @@ h1 {
   margin-bottom: 2rem;
 }
 
+h2 {
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+}
+
 h3 {
   font-family: $secondary-font;
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
+  font-size: 0.75rem;
+  color: $secondary;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+h3 + p {
+  margin-bottom: 2rem;
+}
+
+span {
+  color: $secondary;
+  font-size: 0.875rem;
 }
 
 h4 {
@@ -69,6 +89,8 @@ p {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+  font-size: 0.875rem;
+  line-height: 1.25;
 }
 
 form input {
@@ -136,7 +158,7 @@ header {
     text-overflow: ellipsis;
 
     @include media-breakpoint-up(sm) {
-      padding: 1.5rem 1.5rem 1.5rem 2.1875rem;
+      padding: 1.5rem 5rem 1.5rem 2.1875rem;
     }
   }
 
@@ -210,7 +232,7 @@ main {
 
 // Components
 .btn-group {
-  &.tag {
+  &.filters-content {
     margin: 1rem 0rem;
     width: 100%;
 
@@ -270,11 +292,15 @@ main {
 
     .form-control {
       position: relative;
-      padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+      padding: 0.5rem 1.85rem 0.5rem 0.5rem;
       font-size: 0.85rem;
       text-overflow: ellipsis;
       border-radius: 0;
       margin-bottom: 1rem;
+
+      &:focus {
+        border-color: $secondary;
+      }
     }
 
     .dropdown-item {
@@ -291,17 +317,81 @@ main {
 
 .number-of-recipes {
   order: 1;
-  padding: 1rem 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   text-align: center;
 
   @include media-breakpoint-up(lg) {
     order: 2;
+    text-align: right;
   }
 }
 
 .filters {
   order: 2;
+
   @include media-breakpoint-up(lg) {
     order: 1;
+  }
+}
+
+// Cards
+.cards {
+  a {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+    &:hover {
+      text-decoration: none;
+
+      article {
+        filter: drop-shadow(0px 3px 15px rgba(0, 0, 0, 0.1));
+      }
+    }
+  }
+
+  article {
+    transition: all 0.3s ease;
+  }
+}
+
+.card {
+  position: relative;
+  border-radius: 1.5rem 1.5rem;
+  border: none;
+  height: 100%;
+
+  &-body {
+    padding: 2rem 1.5rem 3rem 1.5rem;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    span {
+      margin-bottom: 1rem;
+      display: block;
+    }
+  }
+
+  &-tag {
+    position: absolute;
+    display: inline-block;
+    background-color: $highlight-color;
+    color: black;
+    border-radius: 50px 50px;
+    top: 1.25rem;
+    right: 1.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  &-img-top {
+    max-height: 254px;
+    object-fit: cover;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
   }
 }
