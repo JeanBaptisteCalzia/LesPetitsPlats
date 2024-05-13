@@ -2,6 +2,8 @@
 // This file contains All styles
 // -----------------------------------------------------------------------------
 
+@import "variables-overrides.scss";
+
 // Bootstrap 5 styles
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
@@ -30,9 +32,8 @@ $primary-font: "Anton", sans-serif;
 $secondary-font: "Manrope", sans-serif;
 
 // Color variables
-$primary-color: #000;
-$secondary-color: #7a7a7a;
 $highlight-color: #ffd15b;
+$body-color: #ededed;
 
 // Typography
 h1,
@@ -57,6 +58,10 @@ h3 {
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
+}
+
+h4 {
+  margin-bottom: 0;
 }
 
 p {
@@ -165,5 +170,138 @@ header {
         transform: translate(-50%, -50%);
       }
     }
+  }
+}
+
+// Main
+main {
+  background-color: $body-color;
+
+  .btn-group {
+    flex-direction: column;
+
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+    }
+  }
+
+  .btn-group > .btn-group {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    @include media-breakpoint-up(md) {
+      margin-right: auto;
+      margin-bottom: initial;
+    }
+  }
+
+  .btn-group > .btn-group:not(:last-child) {
+    margin-right: 0;
+
+    @include media-breakpoint-up(md) {
+      margin-right: 2rem;
+    }
+
+    @include media-breakpoint-up(xl) {
+      margin-right: 4rem;
+    }
+  }
+}
+
+// Components
+.btn-group {
+  &.tag {
+    margin: 1rem 0rem;
+    width: 100%;
+
+    @include media-breakpoint-up(md) {
+      width: auto;
+    }
+  }
+
+  > .btn {
+    flex-grow: initial;
+    flex-shrink: initial;
+    flex-basis: initial;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+  }
+
+  > .btn-group {
+    .btn {
+      padding: 1rem 1rem;
+      border-radius: 0.75rem;
+    }
+
+    .dropdown-menu {
+      .btn {
+        padding: 0.5rem;
+      }
+    }
+
+    &:not(:first-child) > .btn,
+    &:not(:last-child) > .btn {
+      border-radius: 0.75rem;
+      min-width: 100%;
+
+      @include media-breakpoint-up(md) {
+        min-width: 195px;
+      }
+
+      &.show {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    border: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    min-width: 100%;
+    padding: 1rem;
+    margin-top: -2px !important;
+
+    @include media-breakpoint-up(md) {
+      min-width: 195px;
+    }
+
+    .form-control {
+      position: relative;
+      padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+      font-size: 0.85rem;
+      text-overflow: ellipsis;
+      border-radius: 0;
+      margin-bottom: 1rem;
+    }
+
+    .dropdown-item {
+      padding: 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .btn {
+      position: absolute;
+      right: 1rem;
+    }
+  }
+}
+
+.number-of-recipes {
+  order: 1;
+  padding: 1rem 0;
+  text-align: center;
+
+  @include media-breakpoint-up(lg) {
+    order: 2;
+  }
+}
+
+.filters {
+  order: 2;
+  @include media-breakpoint-up(lg) {
+    order: 1;
   }
 }
