@@ -162,17 +162,59 @@ header {
     }
   }
 
-  .btn {
+  .btn-search {
     border-radius: 0.625rem 0.625rem;
     position: absolute;
     right: 0.75rem;
     padding: 0;
     height: 2rem;
     width: 2rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: $highlight-color;
+      border: 1px solid $highlight-color;
+
+      i {
+        color: black;
+      }
+    }
 
     @include media-breakpoint-up(sm) {
       height: 3.25rem;
       width: 3.25rem;
+    }
+
+    i {
+      padding: 0.85rem;
+      height: 2rem;
+      width: 2rem;
+      font-size: 1rem;
+
+      @include media-breakpoint-up(sm) {
+        font-size: 1.75rem;
+      }
+
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  .btn-clear {
+    border-radius: 0.625rem 0.625rem;
+    position: absolute;
+    right: 3rem;
+    padding: 0;
+    height: 2rem;
+    width: 2rem;
+    color: $secondary;
+
+    @include media-breakpoint-up(sm) {
+      right: 4.5rem;
     }
 
     i {
@@ -230,8 +272,48 @@ main {
   }
 }
 
+// Filters bar
+.number-of-recipes {
+  order: 1;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: center;
+
+  @include media-breakpoint-up(lg) {
+    order: 2;
+    text-align: right;
+  }
+}
+
+.filters {
+  order: 2;
+
+  @include media-breakpoint-up(lg) {
+    order: 1;
+  }
+}
+
 // Components
 .btn-group {
+  .dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    font-family: "Font Awesome 5 Free";
+    content: "\f078";
+    font-weight: 900;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+  }
+
+  .dropdown-toggle.show::after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f077";
+    font-weight: 900;
+  }
+
   &.filters-content {
     margin: 1rem 0rem;
     width: 100%;
@@ -260,6 +342,10 @@ main {
       .btn {
         padding: 0.5rem;
       }
+
+      .btn-clear {
+        right: 2.5rem;
+      }
     }
 
     &:not(:first-child) > .btn,
@@ -283,8 +369,13 @@ main {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     min-width: 100%;
-    padding: 1rem;
+    padding-bottom: 0;
     margin-top: -2px !important;
+
+    li:first-child {
+      padding: 1rem;
+      padding-top: 0;
+    }
 
     @include media-breakpoint-up(md) {
       min-width: 195px;
@@ -292,7 +383,7 @@ main {
 
     .form-control {
       position: relative;
-      padding: 0.5rem 1.85rem 0.5rem 0.5rem;
+      padding: 0.5rem 3rem 0.5rem 0.5rem;
       font-size: 0.85rem;
       text-overflow: ellipsis;
       border-radius: 0;
@@ -303,35 +394,23 @@ main {
       }
     }
 
+    .dropdown-item:last-child {
+      padding-bottom: 0.5rem;
+    }
+
     .dropdown-item {
-      padding: 0.25rem 0;
+      padding: 0.25rem 1rem;
       font-size: 0.875rem;
+
+      &:hover {
+        background-color: $highlight-color;
+      }
     }
 
     .btn {
       position: absolute;
       right: 1rem;
     }
-  }
-}
-
-.number-of-recipes {
-  order: 1;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  text-align: center;
-
-  @include media-breakpoint-up(lg) {
-    order: 2;
-    text-align: right;
-  }
-}
-
-.filters {
-  order: 2;
-
-  @include media-breakpoint-up(lg) {
-    order: 1;
   }
 }
 
