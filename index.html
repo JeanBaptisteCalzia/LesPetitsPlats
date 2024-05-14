@@ -14,7 +14,7 @@
     />
   </head>
   <body>
-    <nav class="navbar bg-transparent">
+    <nav role="navigation" class="navbar bg-transparent">
       <div class="container-xxl">
         <a class="navbar-brand" href="./">
           <img
@@ -24,7 +24,7 @@
         </a>
       </div>
     </nav>
-    <header class="d-flex justify-content-center">
+    <header role="banner" class="d-flex justify-content-center">
       <div class="container align-self-center">
         <div class="row justify-content-center">
           <div class="col col-md-9">
@@ -38,16 +38,22 @@
         <div class="row justify-content-center">
           <div class="col col-md-9">
             <form class="d-flex">
+              <label class="visually-hidden" for="search-recipes"
+                >Rechercher une recette</label
+              >
               <input
+                id="search-recipes"
                 class="form-control"
                 type="search"
                 placeholder="Rechercher une recette, un ingrédient, ..."
                 aria-label="Search"
               />
               <button class="btn btn-clear">
+                <span class="visually-hidden">Clear</span>
                 <i class="fa-solid fa-xmark"></i>
               </button>
               <button class="btn btn-search btn-dark" type="submit">
+                <span class="visually-hidden">Submit</span>
                 <i class="fa-solid fa-magnifying-glass"></i>
               </button>
             </form>
@@ -55,7 +61,7 @@
         </div>
       </div>
     </header>
-    <main>
+    <main role="main">
       <section class="container">
         <div class="row mb-5">
           <div
@@ -79,16 +85,22 @@
                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                   <li>
                     <form class="d-flex">
+                      <label class="visually-hidden" for="search-ingredient"
+                        >Rechercher un ingrédient</label
+                      >
                       <input
+                        id="search-ingredient"
                         class="form-control"
                         type="search"
                         placeholder=""
                         aria-label="Search"
                       />
                       <button class="btn btn-clear">
+                        <span class="visually-hidden">Clear</span>
                         <i class="fa-solid fa-xmark"></i>
                       </button>
                       <button class="btn btn-search" type="submit">
+                        <span class="visually-hidden">Submit</span>
                         <i class="fa-solid fa-magnifying-glass"></i>
                       </button>
                     </form>
@@ -110,16 +122,22 @@
                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop2">
                   <li>
                     <form class="d-flex">
+                      <label class="visually-hidden" for="search-device"
+                        >Rechercher un appareil</label
+                      >
                       <input
+                        id="search-device"
                         class="form-control"
                         type="search"
                         placeholder=""
                         aria-label="Search"
                       />
                       <button class="btn btn-clear">
+                        <span class="visually-hidden">Clear</span>
                         <i class="fa-solid fa-xmark"></i>
                       </button>
                       <button class="btn" type="submit">
+                        <span class="visually-hidden">Submit</span>
                         <i class="fa-solid fa-magnifying-glass"></i>
                       </button>
                     </form>
@@ -141,16 +159,24 @@
                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop3">
                   <li>
                     <form class="d-flex">
+                      <label
+                        class="visually-hidden"
+                        for="search-kitchen-utensil"
+                        >Rechercher un ustencils</label
+                      >
                       <input
+                        id="search-kitchen-utensil"
                         class="form-control"
                         type="search"
                         placeholder=""
                         aria-label="Search"
                       />
                       <button class="btn btn-clear">
+                        <span class="visually-hidden">Clear</span>
                         <i class="fa-solid fa-xmark"></i>
                       </button>
                       <button class="btn" type="submit">
+                        <span class="visually-hidden">Submit</span>
                         <i class="fa-solid fa-magnifying-glass"></i>
                       </button>
                     </form>
@@ -162,7 +188,7 @@
             </div>
           </div>
           <div class="number-of-recipes col-12 col-lg-3 align-self-center">
-            <h4>1500 recettes</h4>
+            <p>1500 recettes</p>
           </div>
         </div>
       </section>
