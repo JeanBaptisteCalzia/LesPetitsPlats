@@ -10522,7 +10522,7 @@ main {
   content: "\f077";
   font-weight: 900; }
 .btn-group.filters-content {
-  margin: 1rem 0rem;
+  margin: 1.5rem 0;
   width: 100%; }
   @media (min-width: 768px) {
     .btn-group.filters-content {
@@ -10630,11 +10630,40 @@ main {
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem; }
 
+@media (min-width: 768px) {
+  .tags {
+    padding: 0 2.375rem; } }
+@media (min-width: 992px) {
+  .tags {
+    padding: 0 0.75rem; } }
+.tags .list-group-horizontal > .list-group-item:first-child:not(:last-child),
+.tags .list-group-horizontal > .list-group-item:last-child:not(:first-child) {
+  border-radius: 0.75rem; }
+.tags .list-group-horizontal {
+  flex-wrap: nowrap;
+  overflow: scroll; }
+  @media (min-width: 768px) {
+    .tags .list-group-horizontal {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      overflow: initial; } }
+  @media (min-width: 992px) {
+    .tags .list-group-horizontal {
+      justify-content: flex-start; } }
 .tags .list-group-item {
   border: none;
   border-radius: 0.75rem;
   background-color: #ffd15b;
-  padding: 0 0; }
+  padding: 0 0;
+  margin-right: 1rem;
+  margin-bottom: 1rem; }
+  @media (min-width: 768px) {
+    .tags .list-group-item {
+      margin-right: 0; } }
+  @media (min-width: 992px) {
+    .tags .list-group-item {
+      margin-right: 1rem; } }
   .tags .list-group-item .btn {
     display: flex;
     justify-content: space-between;
