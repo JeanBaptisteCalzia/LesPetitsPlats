@@ -157,12 +157,12 @@ header {
   .form-control {
     border: none;
     border-radius: 0.625rem 0.625rem;
-    padding: 1rem 3.5rem 1rem 1rem;
+    padding: 1rem 5rem 1rem 1rem;
     font-size: 0.85rem;
     text-overflow: ellipsis;
 
     @include media-breakpoint-up(sm) {
-      padding: 1.5rem 5rem 1.5rem 2.1875rem;
+      padding: 1.5rem 7rem 1.5rem 2.1875rem;
     }
   }
 
