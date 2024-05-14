@@ -10463,6 +10463,8 @@ main {
   background-color: #ededed; }
   main .btn-group {
     flex-direction: column; }
+    main .btn-group button {
+      font-weight: 500; }
     @media (min-width: 768px) {
       main .btn-group {
         flex-direction: row; } }
@@ -10582,6 +10584,8 @@ main {
     font-size: 0.875rem; }
     .btn-group .dropdown-menu .dropdown-item:hover {
       background-color: #ffd15b; }
+    .btn-group .dropdown-menu .dropdown-item:active {
+      color: black; }
   .btn-group .dropdown-menu .btn {
     position: absolute;
     right: 1rem; }
@@ -10625,5 +10629,25 @@ main {
     object-fit: cover;
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem; }
+
+.tags .list-group-item {
+  border: none;
+  border-radius: 0.75rem;
+  background-color: #ffd15b;
+  padding: 0 0; }
+  .tags .list-group-item .btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem;
+    min-width: 195px; }
+    .tags .list-group-item .btn span {
+      display: block;
+      color: black; }
+    .tags .list-group-item .btn .badge {
+      top: 2px; }
+    .tags .list-group-item .btn .badge i {
+      color: black;
+      font-size: 1.25rem; }
 
 /*# sourceMappingURL=style.css.map */

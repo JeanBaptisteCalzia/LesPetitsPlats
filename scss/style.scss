@@ -244,6 +244,10 @@ main {
   .btn-group {
     flex-direction: column;
 
+    button {
+      font-weight: 500;
+    }
+
     @include media-breakpoint-up(md) {
       flex-direction: row;
     }
@@ -420,6 +424,10 @@ main {
       &:hover {
         background-color: $highlight-color;
       }
+
+      &:active {
+        color: black;
+      }
     }
 
     .btn {
@@ -487,5 +495,37 @@ main {
     object-fit: cover;
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem;
+  }
+}
+
+// Tags
+.tags {
+  .list-group-item {
+    border: none;
+    border-radius: 0.75rem;
+    background-color: $highlight-color;
+    padding: 0 0;
+
+    .btn {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1rem;
+      min-width: 195px;
+
+      span {
+        display: block;
+        color: black;
+      }
+
+      .badge {
+        top: 2px;
+      }
+
+      .badge i {
+        color: black;
+        font-size: 1.25rem;
+      }
+    }
   }
 }
