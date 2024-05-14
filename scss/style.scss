@@ -24,6 +24,10 @@ body {
   box-sizing: inherit;
 }
 
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
+
 // Google Font
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap");
 
