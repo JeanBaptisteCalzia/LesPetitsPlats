@@ -10329,7 +10329,6 @@ h2, .h2 {
 
 h3, .h3 {
   font-family: "Manrope", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   font-size: 0.75rem;
@@ -10351,7 +10350,6 @@ h4, .h4 {
 
 p {
   font-family: "Manrope", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
   font-size: 0.875rem;
@@ -10359,7 +10357,6 @@ p {
 
 form input {
   font-family: "Manrope", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 300;
   font-style: normal; }
 
