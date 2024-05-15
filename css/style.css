@@ -10471,6 +10471,8 @@ main {
   main .btn-group > .btn-group {
     width: 100%;
     margin-bottom: 1rem; }
+    main .btn-group > .btn-group a:hover {
+      cursor: pointer; }
     @media (min-width: 768px) {
       main .btn-group > .btn-group {
         margin-right: auto;
@@ -10537,6 +10539,14 @@ main {
 .btn-group > .btn-group .btn {
   padding: 1rem 1rem;
   border-radius: 0.75rem; }
+.btn-group > .btn-group .dropdown-menu.show {
+  max-height: 18.5rem;
+  overflow-y: scroll;
+  overflow-x: hidden; }
+  .btn-group > .btn-group .dropdown-menu.show a {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
 .btn-group > .btn-group .dropdown-menu .btn {
   padding: 0.5rem; }
 .btn-group > .btn-group .dropdown-menu .btn-clear {
@@ -10568,7 +10578,8 @@ main {
     border-bottom-right-radius: 0.75rem; }
   @media (min-width: 768px) {
     .btn-group .dropdown-menu {
-      min-width: 195px; } }
+      min-width: 195px;
+      max-width: 195px; } }
   .btn-group .dropdown-menu .form-control {
     position: relative;
     padding: 0.5rem 3rem 0.5rem 0.5rem;

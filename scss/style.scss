@@ -257,6 +257,10 @@ main {
     width: 100%;
     margin-bottom: 1rem;
 
+    a:hover {
+      cursor: pointer;
+    }
+
     @include media-breakpoint-up(md) {
       margin-right: auto;
       margin-bottom: initial;
@@ -351,6 +355,18 @@ main {
     }
 
     .dropdown-menu {
+      &.show {
+        max-height: 18.5rem;
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        a {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+
       .btn {
         padding: 0.5rem;
       }
@@ -399,6 +415,7 @@ main {
 
     @include media-breakpoint-up(md) {
       min-width: 195px;
+      max-width: 195px;
     }
 
     .form-control {
