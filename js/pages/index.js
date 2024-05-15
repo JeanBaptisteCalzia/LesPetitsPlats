@@ -1,5 +1,32 @@
 import { recipes } from "../data/recipes.js";
 
+// Retrieve Appliance elements
+const applianceRecipe = recipes.map((appliance) => appliance.appliance);
+
+// Retrieve Ustencils elements
+const ustensilsRecipe = recipes.map((ustensil) => ustensil.ustensils);
+const mergeUstensilsRecipe = ustensilsRecipe.flat(1); //The depth level specifying how deep a nested array structure should be flattened. Defaults to 1.
+
+// Retrieve Ingredients elements
+const ingredientsRecipe = recipes.map((ingredient) => ingredient.ingredients);
+const ingredientsRecipeOnly = ingredientsRecipe
+  .reduce((c, v) => c.concat(v), [])
+  .map((o) => o.ingredient);
+
+// Remove duplicate elements inside an array
+function removeDuplicates(arr) {
+  return arr.filter((item, index) => arr.indexOf(item) === index);
+}
+
+// Remove duplicate elements inside Appliances array
+const filterApplianceRecipe = removeDuplicates(applianceRecipe);
+
+// Remove duplicate elements inside Ustensils array
+const filterUstensilsRecipe = removeDuplicates(mergeUstensilsRecipe);
+
+// Remove duplicate elements inside Ingredients array
+const filterIngredientsRecipe = removeDuplicates(ingredientsRecipeOnly);
+
 // Cards template
 function recipeTemplate(data) {
   const { id, image, name, time, description, ingredients } = data;
@@ -9,6 +36,7 @@ function recipeTemplate(data) {
   const ingredientsRecipe = ingredients.map(
     (ingredient) => ingredient.ingredient
   );
+
   // Retrieve Quantities elements
   const quantityRecipe = ingredients.map((quantity) => quantity.quantity);
 
@@ -108,47 +136,53 @@ function recipeTemplate(data) {
 }
 
 // Filters template
-function filtersTemplate(data) {
-  const { ingredients, appliance, ustensils } = data;
+function getFiltersDOM(id) {
+  // Wrapper
+  const wrapper = document.getElementById(id);
 
-  function getFiltersDOM(id, dataType) {
-    // Wrapper
-    const wrapper = document.getElementById(id);
+  // Display Appliances
+  if (id === "appliance") {
+    let numberOfLi = filterApplianceRecipe.length;
 
-    // List
-    const list = document.createElement("li");
-
-    // Link
-    const link = document.createElement("a");
-    link.setAttribute("class", "dropdown-item");
-
-    if (dataType === "appliance") {
-      link.textContent = appliance;
+    for (let i = 0; i < numberOfLi; i++) {
+      const list = document.createElement("li");
+      const link = document.createElement("a");
+      link.setAttribute("class", "dropdown-item");
+      link.textContent = filterApplianceRecipe[i];
+      list.appendChild(link);
+      wrapper.appendChild(list);
     }
-
-    if (dataType === "ustensils") {
-      link.textContent = ustensils;
-    }
-
-    const ingredientsRecipe = ingredients.map(
-      (ingredient) => ingredient.ingredient
-    );
-
-    if (dataType === "ingredients") {
-      link.textContent = ingredientsRecipe;
-    }
-
-    wrapper.appendChild(list);
-    list.appendChild(link);
-    return wrapper;
   }
 
-  return {
-    ingredients,
-    appliance,
-    ustensils,
-    getFiltersDOM,
-  };
+  // Display Ustencils
+  if (id === "ustensils") {
+    let numberOfLi = filterUstensilsRecipe.length;
+
+    for (let i = 0; i < numberOfLi; i++) {
+      const list = document.createElement("li");
+      const link = document.createElement("a");
+      link.setAttribute("class", "dropdown-item");
+      link.textContent = filterUstensilsRecipe[i];
+      list.appendChild(link);
+      wrapper.appendChild(list);
+    }
+  }
+
+  // Display Ingredients
+  if (id === "ingredients") {
+    let numberOfLi = filterIngredientsRecipe.length;
+
+    for (let i = 0; i < numberOfLi; i++) {
+      const list = document.createElement("li");
+      const link = document.createElement("a");
+      link.setAttribute("class", "dropdown-item");
+      link.textContent = filterIngredientsRecipe[i];
+      list.appendChild(link);
+      wrapper.appendChild(list);
+    }
+  }
+
+  return wrapper;
 }
 
 // Display Cards template
@@ -164,18 +198,15 @@ function displayData(recipes) {
 displayData(recipes);
 
 // Display Filters template
-function displayFiltersData(elements, id, dataType) {
+function displayFiltersData(id) {
   const filtersSection = document.getElementById(id);
-  elements.forEach((element) => {
-    const filtersModel = filtersTemplate(element);
-    const filtersCardDOM = filtersModel.getFiltersDOM(id, dataType);
-    filtersSection.contains(filtersCardDOM);
-  });
+  const filtersCardDOM = getFiltersDOM(id);
+  filtersSection.contains(filtersCardDOM);
 }
 
-displayFiltersData(recipes, "ingredients", "ingredients");
-displayFiltersData(recipes, "appliance", "appliance");
-displayFiltersData(recipes, "ustensils", "ustensils");
+displayFiltersData("ingredients");
+displayFiltersData("appliance");
+displayFiltersData("ustensils");
 
 // Display numbers total of Recipes
 function totalRecipes() {
