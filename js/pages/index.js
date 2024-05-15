@@ -116,3 +116,16 @@ function displayData(recipes) {
 }
 
 displayData(recipes);
+
+// Display numbers total of Recipes
+function totalRecipes() {
+  const recipesCount = document.querySelector(".number-of-recipes p");
+  const initialValue = recipes.length;
+  //   const totalRecipes = recipes.reduce(
+  //     (accumulator, recipe) => accumulator + recipe.id,
+  //     initialValue
+  //   );
+  recipesCount.textContent = `${initialValue} recettes`;
+}
+
+totalRecipes();
