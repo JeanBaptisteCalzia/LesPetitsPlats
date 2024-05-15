@@ -1,5 +1,6 @@
 import { recipes } from "../data/recipes.js";
 
+// Cards template
 function recipeTemplate(data) {
   const { id, image, name, time, description, ingredients } = data;
   const picture = `img/recipes/${image}`;
@@ -106,6 +107,51 @@ function recipeTemplate(data) {
   };
 }
 
+// Filters template
+function filtersTemplate(data) {
+  const { ingredients, appliance, ustensils } = data;
+
+  function getFiltersDOM(id, dataType) {
+    // Wrapper
+    const wrapper = document.getElementById(id);
+
+    // List
+    const list = document.createElement("li");
+
+    // Link
+    const link = document.createElement("a");
+    link.setAttribute("class", "dropdown-item");
+
+    if (dataType === "appliance") {
+      link.textContent = appliance;
+    }
+
+    if (dataType === "ustensils") {
+      link.textContent = ustensils;
+    }
+
+    const ingredientsRecipe = ingredients.map(
+      (ingredient) => ingredient.ingredient
+    );
+
+    if (dataType === "ingredients") {
+      link.textContent = ingredientsRecipe;
+    }
+
+    wrapper.appendChild(list);
+    list.appendChild(link);
+    return wrapper;
+  }
+
+  return {
+    ingredients,
+    appliance,
+    ustensils,
+    getFiltersDOM,
+  };
+}
+
+// Display Cards template
 function displayData(recipes) {
   const cardsSection = document.querySelector(".cards");
   recipes.forEach((recipe) => {
@@ -116,6 +162,20 @@ function displayData(recipes) {
 }
 
 displayData(recipes);
+
+// Display Filters template
+function displayFiltersData(elements, id, dataType) {
+  const filtersSection = document.getElementById(id);
+  elements.forEach((element) => {
+    const filtersModel = filtersTemplate(element);
+    const filtersCardDOM = filtersModel.getFiltersDOM(id, dataType);
+    filtersSection.contains(filtersCardDOM);
+  });
+}
+
+displayFiltersData(recipes, "ingredients", "ingredients");
+displayFiltersData(recipes, "appliance", "appliance");
+displayFiltersData(recipes, "ustensils", "ustensils");
 
 // Display numbers total of Recipes
 function totalRecipes() {
