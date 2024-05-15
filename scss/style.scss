@@ -468,6 +468,13 @@ main {
   &-body {
     padding: 2rem 1.5rem 3rem 1.5rem;
 
+    > p {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4; /* Change this line if you want. In this case it trimmed the text to 4 lines. */
+      overflow: hidden;
+    }
+
     p {
       margin-bottom: 0;
     }
