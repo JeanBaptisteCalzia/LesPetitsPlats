@@ -10,8 +10,8 @@ const mergeUstensilsRecipe = ustensilsRecipe.flat(1); //The depth level specifyi
 // Retrieve Ingredients elements
 const ingredientsRecipe = recipes.map((ingredient) => ingredient.ingredients);
 const ingredientsRecipeOnly = ingredientsRecipe
-  .reduce((c, v) => c.concat(v), [])
-  .map((o) => o.ingredient);
+  .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
+  .map((ingredient) => ingredient.ingredient);
 
 // Remove duplicate elements inside an array
 function removeDuplicates(arr) {
