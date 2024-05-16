@@ -72,9 +72,6 @@ function recipeTemplate(data) {
   const displayQuantityRecipe = cleanData(quantityRecipe);
   const displayUnitRecipe = cleanData(unitRecipe);
 
-  console.log(displayQuantityRecipe);
-  console.log(displayUnitRecipe);
-
   function getRecipeCardDOM() {
     // Wrapper
     const wrapper = document.createElement("div");
