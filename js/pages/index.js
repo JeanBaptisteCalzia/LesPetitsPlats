@@ -13,19 +13,33 @@ const ingredientsRecipeOnly = ingredientsRecipe
   .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
   .map((ingredient) => ingredient.ingredient);
 
+// Make the first letter of a string uppercase, the rest to lowercase
+function capitalizeFirstLetter(filter) {
+  const newArray = [];
+  for (let i = 0; i < filter.length; i++) {
+    const array = filter[i][0].toUpperCase() + filter[i].slice(1).toLowerCase();
+    newArray.push(array);
+  }
+  return newArray;
+}
+
+const filterAppliance = capitalizeFirstLetter(applianceRecipe);
+const filterUstensils = capitalizeFirstLetter(mergeUstensilsRecipe);
+const filterIngredients = capitalizeFirstLetter(ingredientsRecipeOnly);
+
 // Remove duplicate elements inside an array
 function removeDuplicates(arr) {
   return arr.filter((item, index) => arr.indexOf(item) === index);
 }
 
 // Remove duplicate elements inside Appliances array
-const filterApplianceRecipe = removeDuplicates(applianceRecipe);
+const filterApplianceRecipe = removeDuplicates(filterAppliance);
 
 // Remove duplicate elements inside Ustensils array
-const filterUstensilsRecipe = removeDuplicates(mergeUstensilsRecipe);
+const filterUstensilsRecipe = removeDuplicates(filterUstensils);
 
-// Remove duplicate elements inside Ingredients array
-const filterIngredientsRecipe = removeDuplicates(ingredientsRecipeOnly);
+// Remove duplicate elements inside Ingrédients array
+const filterIngredientsRecipe = removeDuplicates(filterIngredients);
 
 // Cards template
 function recipeTemplate(data) {
