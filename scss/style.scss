@@ -349,17 +349,30 @@ main {
   }
 
   > .btn-group {
+    display: flex;
+    flex-direction: column;
+
     .btn {
       padding: 1rem 1rem;
       border-radius: 0.75rem;
     }
 
     .dropdown-menu {
-      &.show {
-        max-height: 18.5rem;
+      position: relative;
+
+      &__container {
+        position: relative;
+        max-height: 16.5rem;
         overflow-y: scroll;
         overflow-x: hidden;
+      }
 
+      form {
+        padding: 1rem;
+        padding-top: 0;
+      }
+
+      &.show {
         a {
           overflow: hidden;
           white-space: nowrap;
@@ -403,9 +416,9 @@ main {
     margin-top: -2px !important;
     padding-top: 0;
 
-    li:first-child {
-      padding: 1rem;
-      padding-top: 0;
+    .btn-group {
+      display: flex;
+      flex-direction: column;
     }
 
     li:last-child .dropdown-item {
