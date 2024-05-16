@@ -234,3 +234,54 @@ function totalRecipes() {
 }
 
 totalRecipes();
+
+// Tags
+const ingredientDropdownFilterElements = document.querySelectorAll(
+  "#ingredients .dropdown-item"
+);
+
+const applianceDropdownFilterElements = document.querySelectorAll(
+  "#appliance .dropdown-item"
+);
+
+const ustensilDropdownFilterElements = document.querySelectorAll(
+  "#ustensils .dropdown-item"
+);
+
+// Add Tags
+function addTags(dropDown, filter) {
+  dropDown.forEach((item) => {
+    item.addEventListener("click", () => {
+      let i = -1;
+      let numberOfLi = filter.length;
+
+      while (i < numberOfLi) {
+        i++;
+        if (item.textContent == filter[i]) {
+          const tags = document.querySelector(".tags ul");
+          const btn = document.createElement("button");
+          const li = document.createElement("li");
+          const span = document.createElement("span");
+          const spanIcon = document.createElement("span");
+          const icon = document.createElement("i");
+
+          li.setAttribute("class", "list-group-item");
+          li.appendChild(btn);
+          btn.setAttribute("class", "btn");
+          btn.setAttribute("type", "button");
+          btn.appendChild(span);
+          btn.appendChild(spanIcon);
+          span.textContent = item.textContent;
+          spanIcon.setAttribute("class", "badge");
+          spanIcon.appendChild(icon);
+          icon.setAttribute("class", "fa-solid fa-xmark");
+          tags.appendChild(li);
+        }
+      }
+    });
+  });
+}
+
+addTags(ingredientDropdownFilterElements, filterIngredientsRecipe);
+addTags(applianceDropdownFilterElements, filterApplianceRecipe);
+addTags(ustensilDropdownFilterElements, filterUstensilsRecipe);
