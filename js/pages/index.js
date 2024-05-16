@@ -57,6 +57,24 @@ function recipeTemplate(data) {
   // Retrieve Units elements
   const unitRecipe = ingredients.map((unit) => unit.unit);
 
+  // Remove Undefined Values from Objects
+  function cleanData(data) {
+    const cleanData = Object.entries(data)
+      .filter(([key, value]) => value !== undefined)
+      .reduce((obj, [key, value]) => {
+        obj[key] = value;
+        return obj;
+      }, {});
+
+    return cleanData;
+  }
+
+  const displayQuantityRecipe = cleanData(quantityRecipe);
+  const displayUnitRecipe = cleanData(unitRecipe);
+
+  console.log(displayQuantityRecipe);
+  console.log(displayUnitRecipe);
+
   function getRecipeCardDOM() {
     // Wrapper
     const wrapper = document.createElement("div");
@@ -111,17 +129,20 @@ function recipeTemplate(data) {
     for (let i = 0; i < numberOfDiv; i++) {
       // P (Ingredient) / Span (quantity & unit)
       const ingredientDesc = document.createElement("p");
-      const quantityUnit = document.createElement("span");
+      const quantity = document.createElement("span");
+      const unit = document.createElement("span");
 
       // Row inner div
       const rowInnerDiv = document.createElement("div");
       rowInnerDiv.setAttribute("class", "col-6");
 
       rowInnerDiv.appendChild(ingredientDesc);
-      rowInnerDiv.appendChild(quantityUnit);
+      rowInnerDiv.appendChild(quantity);
+      rowInnerDiv.appendChild(unit);
       row.appendChild(rowInnerDiv);
       ingredientDesc.textContent = ingredientsRecipe[i];
-      quantityUnit.textContent = quantityRecipe[i] ?? "" + unitRecipe[i] ?? "";
+      quantity.textContent = displayQuantityRecipe[i] ?? "";
+      unit.textContent = displayUnitRecipe[i] ?? "";
     }
 
     // Append elements

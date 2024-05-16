@@ -10639,7 +10639,7 @@ main {
       margin-bottom: 0; }
     .card-body span {
       margin-bottom: 1rem;
-      display: block; }
+      display: inline-block; }
   .card-tag {
     position: absolute;
     display: inline-block;
