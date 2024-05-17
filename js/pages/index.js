@@ -273,16 +273,16 @@ function addTags(dropDown, filter) {
       let i = -1;
       let numberOfLi = filter.length;
 
+      const tags = document.querySelector(".tags ul");
+      const btn = document.createElement("button");
+      const li = document.createElement("li");
+      const span = document.createElement("span");
+      const spanIcon = document.createElement("span");
+      const icon = document.createElement("i");
+
       while (i < numberOfLi) {
         i++;
         if (item.textContent == filter[i]) {
-          const tags = document.querySelector(".tags ul");
-          const btn = document.createElement("button");
-          const li = document.createElement("li");
-          const span = document.createElement("span");
-          const spanIcon = document.createElement("span");
-          const icon = document.createElement("i");
-
           li.setAttribute("class", "list-group-item");
           li.appendChild(btn);
           btn.setAttribute("class", "btn");
@@ -296,6 +296,10 @@ function addTags(dropDown, filter) {
           tags.appendChild(li);
         }
       }
+
+      li.addEventListener("click", (event) => {
+        event.currentTarget.remove(li);
+      });
     });
   });
 }
