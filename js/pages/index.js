@@ -295,13 +295,12 @@ function addTags(dropDown, filter, id) {
           spanIcon.appendChild(icon);
           icon.setAttribute("class", "fa-solid fa-xmark");
           tags.appendChild(li);
+          const index = i;
 
           // i: The position of the first item to delete; 1: number of items to delete
-          filter.splice(i, 1);
+          filter.splice(index, 1);
           listDropdown.innerHTML = "";
           displayFiltersData(id);
-
-          const index = i;
 
           li.addEventListener("click", (event) => {
             event.currentTarget.remove(li);
