@@ -267,7 +267,7 @@ const ustensilDropdownFilterElements = document.querySelectorAll(
 );
 
 // Add Tags
-function addTags(dropDown, filter) {
+function addTags(dropDown, filter, id) {
   dropDown.forEach((item) => {
     item.addEventListener("click", () => {
       let i = -1;
@@ -279,6 +279,7 @@ function addTags(dropDown, filter) {
       const span = document.createElement("span");
       const spanIcon = document.createElement("span");
       const icon = document.createElement("i");
+      const listDropdown = document.getElementById(id);
 
       while (i < numberOfLi) {
         i++;
@@ -294,16 +295,31 @@ function addTags(dropDown, filter) {
           spanIcon.appendChild(icon);
           icon.setAttribute("class", "fa-solid fa-xmark");
           tags.appendChild(li);
+
+          // i: The position of the first item to delete; 1: number of items to delete
+          filter.splice(i, 1);
+          listDropdown.innerHTML = "";
+          displayFiltersData(id);
+
+          const index = i;
+
+          li.addEventListener("click", (event) => {
+            event.currentTarget.remove(li);
+            // i: The starting position to insert; 0: instructs the splice() method to not delete any array elements; item.textContent : element to insert
+            filter.splice(index, 0, item.textContent);
+            listDropdown.innerHTML = "";
+            displayFiltersData(id);
+          });
         }
       }
-
-      li.addEventListener("click", (event) => {
-        event.currentTarget.remove(li);
-      });
     });
   });
 }
 
-addTags(ingredientDropdownFilterElements, filterIngredientsRecipe);
-addTags(applianceDropdownFilterElements, filterApplianceRecipe);
-addTags(ustensilDropdownFilterElements, filterUstensilsRecipe);
+addTags(
+  ingredientDropdownFilterElements,
+  filterIngredientsRecipe,
+  "ingredients"
+);
+addTags(applianceDropdownFilterElements, filterApplianceRecipe, "appliance");
+addTags(ustensilDropdownFilterElements, filterUstensilsRecipe, "ustensils");
