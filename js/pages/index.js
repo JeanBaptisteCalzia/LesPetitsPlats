@@ -214,6 +214,76 @@ function getFiltersDOM(id) {
     }
   }
 
+  // Tags
+  const ingredientDropdownFilterElements = document.querySelectorAll(
+    "#ingredients .dropdown-item"
+  );
+
+  const applianceDropdownFilterElements = document.querySelectorAll(
+    "#appliance .dropdown-item"
+  );
+
+  const ustensilDropdownFilterElements = document.querySelectorAll(
+    "#ustensils .dropdown-item"
+  );
+
+  // Add Tags
+  function addTags(dropDown, filter, id) {
+    dropDown.forEach((item) => {
+      item.addEventListener("click", () => {
+        let i = 0;
+        let numberOfLi = filter.length;
+
+        const tags = document.querySelector(".tags ul");
+        const btn = document.createElement("button");
+        const li = document.createElement("li");
+        const span = document.createElement("span");
+        const spanIcon = document.createElement("span");
+        const icon = document.createElement("i");
+        const listDropdown = document.getElementById(id);
+
+        while (i < numberOfLi) {
+          if (item.textContent == filter[i]) {
+            li.setAttribute("class", "list-group-item");
+            li.appendChild(btn);
+            btn.setAttribute("class", "btn");
+            btn.setAttribute("type", "button");
+            btn.appendChild(span);
+            btn.appendChild(spanIcon);
+            span.textContent = item.textContent;
+            spanIcon.setAttribute("class", "badge");
+            spanIcon.appendChild(icon);
+            icon.setAttribute("class", "fa-solid fa-xmark");
+            tags.appendChild(li);
+
+            // i: The position of the first item to delete; 1: number of items to delete
+            filter.splice(i, 1);
+            listDropdown.textContent = "";
+            displayFiltersData(id);
+
+            li.addEventListener("click", (event) => {
+              event.currentTarget.remove(li);
+              // i: The starting position to insert; 0: instructs the splice() method to not delete any array elements; item.textContent : element to insert
+              filter.splice(i, 0, item.textContent);
+              listDropdown.innerHTML = "";
+              displayFiltersData(id);
+            });
+          }
+
+          i++;
+        }
+      });
+    });
+  }
+
+  addTags(
+    ingredientDropdownFilterElements,
+    filterIngredientsRecipe,
+    "ingredients"
+  );
+  addTags(applianceDropdownFilterElements, filterApplianceRecipe, "appliance");
+  addTags(ustensilDropdownFilterElements, filterUstensilsRecipe, "ustensils");
+
   return wrapper;
 }
 
@@ -252,73 +322,3 @@ function totalRecipes() {
 }
 
 totalRecipes();
-
-// Tags
-const ingredientDropdownFilterElements = document.querySelectorAll(
-  "#ingredients .dropdown-item"
-);
-
-const applianceDropdownFilterElements = document.querySelectorAll(
-  "#appliance .dropdown-item"
-);
-
-const ustensilDropdownFilterElements = document.querySelectorAll(
-  "#ustensils .dropdown-item"
-);
-
-// Add Tags
-function addTags(dropDown, filter, id) {
-  dropDown.forEach((item) => {
-    item.addEventListener("click", () => {
-      let i = 0;
-      let numberOfLi = filter.length;
-
-      const tags = document.querySelector(".tags ul");
-      const btn = document.createElement("button");
-      const li = document.createElement("li");
-      const span = document.createElement("span");
-      const spanIcon = document.createElement("span");
-      const icon = document.createElement("i");
-      const listDropdown = document.getElementById(id);
-
-      while (i < numberOfLi) {
-        if (item.textContent == filter[i]) {
-          li.setAttribute("class", "list-group-item");
-          li.appendChild(btn);
-          btn.setAttribute("class", "btn");
-          btn.setAttribute("type", "button");
-          btn.appendChild(span);
-          btn.appendChild(spanIcon);
-          span.textContent = item.textContent;
-          spanIcon.setAttribute("class", "badge");
-          spanIcon.appendChild(icon);
-          icon.setAttribute("class", "fa-solid fa-xmark");
-          tags.appendChild(li);
-
-          // i: The position of the first item to delete; 1: number of items to delete
-          filter.splice(i, 1);
-          listDropdown.innerHTML = "";
-          displayFiltersData(id);
-
-          li.addEventListener("click", (event) => {
-            event.currentTarget.remove(li);
-            // i: The starting position to insert; 0: instructs the splice() method to not delete any array elements; item.textContent : element to insert
-            filter.splice(i, 0, item.textContent);
-            listDropdown.innerHTML = "";
-            displayFiltersData(id);
-          });
-        }
-
-        i++;
-      }
-    });
-  });
-}
-
-addTags(
-  ingredientDropdownFilterElements,
-  filterIngredientsRecipe,
-  "ingredients"
-);
-addTags(applianceDropdownFilterElements, filterApplianceRecipe, "appliance");
-addTags(ustensilDropdownFilterElements, filterUstensilsRecipe, "ustensils");
