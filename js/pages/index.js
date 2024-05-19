@@ -258,13 +258,14 @@ function getFiltersDOM(id) {
 
             // i: The position of the first item to delete; 1: number of items to delete
             filter.splice(i, 1);
+            const Currentindex = i;
             listDropdown.textContent = "";
             displayFiltersData(id);
 
             li.addEventListener("click", (event) => {
               event.currentTarget.remove(li);
               // i: The starting position to insert; 0: instructs the splice() method to not delete any array elements; item.textContent : element to insert
-              filter.splice(i, 0, item.textContent);
+              filter.splice(Currentindex, 0, item.textContent);
               listDropdown.innerHTML = "";
               displayFiltersData(id);
             });
