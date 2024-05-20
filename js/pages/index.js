@@ -241,6 +241,7 @@ function getFiltersDOM(id) {
         const spanIcon = document.createElement("span");
         const icon = document.createElement("i");
         const listDropdown = document.getElementById(id);
+        const cardsContent = document.querySelector(".cards");
 
         while (i < numberOfLi) {
           if (item.textContent == filter[i]) {
@@ -256,12 +257,22 @@ function getFiltersDOM(id) {
             icon.setAttribute("class", "fa-solid fa-xmark");
             tags.appendChild(li);
 
+            // Display Appliances
+            if (id === "appliance") {
+              cardsContent.innerHTML = "";
+              const appliance = recipes.filter(
+                (appliances) => appliances.appliance == item.textContent
+              );
+              displayData(appliance);
+            }
+
             // i: The position of the first item to delete; 1: number of items to delete
             filter.splice(i, 1);
             const Currentindex = i;
             listDropdown.textContent = "";
             displayFiltersData(id);
 
+            // Remove tags
             li.addEventListener("click", (event) => {
               event.currentTarget.remove(li);
               // i: The starting position to insert; 0: instructs the splice() method to not delete any array elements; item.textContent : element to insert
