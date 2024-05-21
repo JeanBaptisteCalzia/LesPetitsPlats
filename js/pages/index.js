@@ -5,7 +5,7 @@ const applianceRecipe = recipes.map((appliance) => appliance.appliance);
 
 // Retrieve Ustencils elements
 const ustensilsRecipe = recipes.map((ustensil) => ustensil.ustensils);
-const mergeUstensilsRecipe = ustensilsRecipe.flat(1); //The depth level specifying how deep a nested array structure should be flattened. Defaults to 1.
+const mergeUstensilsRecipe = ustensilsRecipe.flat(1); // The depth level specifying how deep a nested array structure should be flattened. Defaults to 1.
 
 // Retrieve Ingredients elements
 const ingredientsRecipe = recipes.map((ingredient) => ingredient.ingredients);
@@ -77,7 +77,7 @@ function recipeTemplate(data) {
     const wrapper = document.createElement("div");
     wrapper.setAttribute("class", "col-12 col-md-6 col-lg-4 mb-5");
 
-    //Link
+    // Link
     const link = document.createElement("a");
     link.setAttribute("href", "#");
 
@@ -106,7 +106,7 @@ function recipeTemplate(data) {
 
     // H3 (Recipe)
     const recipeTitle = document.createElement("h3");
-    recipeTitle.textContent = `Recette`;
+    recipeTitle.textContent = "Recette";
 
     // Description
     const p = document.createElement("p");
@@ -114,7 +114,7 @@ function recipeTemplate(data) {
 
     // H3 (Ingredient)
     const ingredientTitle = document.createElement("h3");
-    ingredientTitle.textContent = `Ingrédients`;
+    ingredientTitle.textContent = "Ingrédients";
 
     // Row
     const row = document.createElement("div");
