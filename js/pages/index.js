@@ -49,24 +49,36 @@ function generateRecipesList(inputValue) {
       }
 
       if (
+        txtValueName.toUpperCase().indexOf(inputSearchValue) == -1 &&
+        txtValueDescription.toUpperCase().indexOf(inputSearchValue) == -1 &&
+        txtValueIngredient.toUpperCase().indexOf(inputSearchValue) == -1
+      ) {
+        cards[i].style.display = "none";
+
+        for (let index in cards) {
+          if (cards[index].style.display !== "none") {
+            break;
+          } else {
+            // We retrieve Error messages
+            const errorMessage = document.querySelectorAll(".error-message");
+            // We delete error messages (div)
+            for (const [key, message] of Object.entries(errorMessage)) {
+              message.remove(errorMessage);
+            }
+            displayErrorMessage(inputSearchValue);
+          }
+        }
+      } else if (
         txtValueName.toUpperCase().indexOf(inputSearchValue) > -1 ||
         txtValueDescription.toUpperCase().indexOf(inputSearchValue) > -1 ||
         txtValueIngredient.toUpperCase().indexOf(inputSearchValue) > -1
       ) {
         cards[i].style.display = "block";
         // mainSearch.push(inputSearchValue);
-      } else if (
-        txtValueName.toUpperCase().indexOf(inputSearchValue) == -1 &&
-        txtValueDescription.toUpperCase().indexOf(inputSearchValue) == -1 &&
-        txtValueIngredient.toUpperCase().indexOf(inputSearchValue) == -1
-      ) {
-        cards[i].style.display = "none";
-        displayErrorMessage(inputSearchValue);
-      } else {
-        cards[i].style.display = "none";
       }
     }
   } else {
+    // We retrieve Error messages
     const errorMessage = document.querySelectorAll(".error-message");
     // We delete error messages (div)
     for (const [key, message] of Object.entries(errorMessage)) {
@@ -91,7 +103,7 @@ function displayErrorMessage(message) {
 }
 
 // Search recipes on key down
-inputSearch.onkeydown = function (e) {
+inputSearch.onkeydown = function () {
   var _this = this;
 
   // log input's value once keydown completes
