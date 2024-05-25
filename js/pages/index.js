@@ -12,12 +12,6 @@ const mainSearch = [];
 // Filters
 const filters = [];
 
-// const result = recipesToDisplay.map(({ name, description, ingredients }) => ({
-//   name,
-//   description,
-//   ingredients,
-// }));
-
 // Array of Recipes Name, description and ingredients
 const arrayOfRecipesName = recipesToDisplay.map((recipes) => recipes.name);
 const arrayOfRecipesDescription = recipesToDisplay.map(
@@ -37,17 +31,18 @@ const mergeArray = arrayOfRecipesName.concat(
   ingredientsRecipeOnly
 );
 
-// To uppercase function
-const toUpper = function (e) {
-  return e.toUpperCase();
-};
-const arrayOfRecipesNameAndDescriptionAndIngredients = mergeArray.map(toUpper);
+const arrayOfRecipesNameAndDescriptionAndIngredients = mergeArray.map(
+  (value) => {
+    return value.toUpperCase();
+  }
+);
 
 // DOM Elements
 const inputSearch = document.getElementById("search-recipes");
 const btnSearch = document.querySelector(".btn-search");
 const btnClearSearch = document.querySelector(".btn-clear");
 const cardsContainer = document.querySelector(".cards");
+let filterRecipes = recipesToDisplay;
 
 // Create recipes card list
 const generateRecipesList = () => {
@@ -56,20 +51,46 @@ const generateRecipesList = () => {
   const inputSearchValue = inputSearch.value.toUpperCase();
 
   if (inputSearchValue.length > 2) {
-    for (let word of arrayOfRecipesNameAndDescriptionAndIngredients) {
-      const searchWord = word.toUpperCase();
-
-      if (searchWord.indexOf(inputSearchValue) !== -1) {
-        displayData(recipesToDisplay);
-      } else {
+    for (
+      let i = 0;
+      i < arrayOfRecipesNameAndDescriptionAndIngredients.length;
+      i++
+    ) {
+      if (
+        arrayOfRecipesNameAndDescriptionAndIngredients.indexOf(
+          inputSearchValue
+        ) > -1
+      ) {
+        cardsContainer.innerHTML = "";
+        filterRecipes = recipesToDisplay.filter(
+          (obj) =>
+            obj.name.toUpperCase() === inputSearchValue ||
+            obj.description.toUpperCase() === inputSearchValue ||
+            obj.ingredients.some(
+              (item) => item.ingredient.toUpperCase() === inputSearchValue
+            )
+        );
+        displayData(filterRecipes);
+        totalRecipes(filterRecipes);
       }
-    }
 
-    if (cardsContainer.innerHTML === "") {
-      cardsContainer.innerHTML += `Aucune recette ne contient « ${inputSearchValue} » vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
+      if (cardsContainer.innerHTML === "") {
+        cardsContainer.innerHTML += `Aucune recette ne contient « ${inputSearchValue} » vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
+
+        filterRecipes = recipesToDisplay.filter(
+          (obj) =>
+            obj.name.toUpperCase() === inputSearchValue ||
+            obj.description.toUpperCase() === inputSearchValue ||
+            obj.ingredients.some(
+              (item) => item.ingredient.toUpperCase() === inputSearchValue
+            )
+        );
+        totalRecipes(filterRecipes);
+      }
     }
   } else {
     displayData(recipesToDisplay);
+    totalRecipes(recipesToDisplay);
   }
 };
 
@@ -104,4 +125,4 @@ function totalRecipes(totalRecipes) {
   recipesCount.textContent = `${initialValue} recettes`;
 }
 
-totalRecipes(recipesToDisplay);
+totalRecipes(filterRecipes);

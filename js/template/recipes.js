@@ -1,6 +1,16 @@
 // Cards template
 export function recipeTemplate(data) {
-  const { id, image, name, time, description, ingredients } = data;
+  const {
+    id,
+    image,
+    name,
+    time,
+    description,
+    ingredients,
+    appliance,
+    servings,
+    ustensils,
+  } = data;
   const picture = `img/recipes/${image}`;
 
   // Retrieve Ingredients elements
@@ -120,6 +130,9 @@ export function recipeTemplate(data) {
     time,
     description,
     ingredients,
+    appliance,
+    servings,
+    ustensils,
     getRecipeCardDOM,
   };
 }
@@ -127,6 +140,7 @@ export function recipeTemplate(data) {
 // Display Cards template
 export function displayData(recipes) {
   const cardsSection = document.querySelector(".cards");
+
   recipes.forEach((recipe) => {
     const recipeModel = recipeTemplate(recipe);
     const recipeCardDOM = recipeModel.getRecipeCardDOM();
