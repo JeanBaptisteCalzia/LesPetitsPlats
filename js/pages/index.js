@@ -110,6 +110,44 @@ btnClearSearch.addEventListener("click", (event) => {
   generateRecipesList(inputSearch);
 });
 
+// Search input dropdown
+const inputSearchIngredients = document.getElementById("search-ingredient");
+const inputSearchAppliances = document.getElementById("search-appliance");
+const inputSearchUstensils = document.getElementById("search-ustensils");
+
+inputSearchIngredients.addEventListener("keyup", () => {
+  filterFunction(inputSearchIngredients, "ingredients");
+});
+
+inputSearchAppliances.addEventListener("keyup", () => {
+  filterFunction(inputSearchAppliances, "appliance");
+});
+
+inputSearchUstensils.addEventListener("keyup", () => {
+  filterFunction(inputSearchUstensils, "ustensils");
+});
+
+// Dropdown filters
+function filterFunction(dropdownId, dropdownListId) {
+  let i;
+  const input = dropdownId;
+  const filter = input.value.toUpperCase();
+  const div = document.getElementById(dropdownListId);
+  const a = div.getElementsByTagName("a");
+
+  console.log(filter);
+
+  for (i = 0; i < a.length; i++) {
+    const txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].parentElement.style.display = "";
+    } else {
+      a[i].parentElement.style.display = "none";
+    }
+  }
+}
+
+// Display Filters Dropdown
 displayFiltersData("ingredients");
 displayFiltersData("appliance");
 displayFiltersData("ustensils");
