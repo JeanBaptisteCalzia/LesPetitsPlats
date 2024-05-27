@@ -4,7 +4,7 @@ import { getFiltersDOM, displayFiltersData } from "../template/filters.js";
 
 // Recipes
 const originalRecipes = [...recipes];
-const recipesToDisplay = [...originalRecipes];
+export const recipesToDisplay = [...originalRecipes];
 
 // Main header search bar
 const mainSearch = [];
@@ -42,7 +42,7 @@ const inputSearch = document.getElementById("search-recipes");
 const btnSearch = document.querySelector(".btn-search");
 const btnClearSearch = document.querySelector(".btn-clear");
 const cardsContainer = document.querySelector(".cards");
-let filterRecipes = recipesToDisplay;
+export let filterRecipes = recipesToDisplay;
 
 // Create recipes card list
 const generateRecipesList = () => {
@@ -151,7 +151,7 @@ displayFiltersData("appliance");
 displayFiltersData("ustensils");
 
 // Display numbers total of Recipes
-function totalRecipes(totalRecipes) {
+export function totalRecipes(totalRecipes) {
   const recipesCount = document.querySelector(".number-of-recipes p");
   const initialValue = totalRecipes.length;
   //   const totalRecipes = recipes.reduce(

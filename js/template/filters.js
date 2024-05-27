@@ -1,5 +1,10 @@
 import { recipes } from "../data/recipes.js";
 import { displayData } from "../template/recipes.js";
+import {
+  recipesToDisplay,
+  filterRecipes,
+  totalRecipes,
+} from "../pages/index.js";
 
 // Retrieve Recipes
 const originalRecipes = [...recipes];
@@ -128,13 +133,34 @@ export function getFiltersDOM(id) {
             icon.setAttribute("class", "fa-solid fa-xmark");
             tags.appendChild(li);
 
-            // Display Appliances
-            if (id === "appliance") {
-              cardsContent.innerHTML = "";
-              const appliance = recipes.filter(
-                (appliances) => appliances.appliance == item.textContent
-              );
-              displayData(appliance);
+            // Display Appliances, ingredients, ustensils
+            filterFunction("ingredients");
+            filterFunction("appliance");
+            filterFunction("ustensils");
+
+            function filterFunction(dropdownId) {
+              if (id === dropdownId) {
+                cardsContent.innerHTML = "";
+
+                const CardRecipes = filterRecipes.filter(
+                  (obj) =>
+                    obj.appliance.toUpperCase() ===
+                      item.textContent.toUpperCase() ||
+                    obj.ustensils.some(
+                      (property) =>
+                        property.toUpperCase() ===
+                        item.textContent.toUpperCase()
+                    ) ||
+                    obj.ingredients.some(
+                      (property) =>
+                        property.ingredient.toUpperCase() ===
+                        item.textContent.toUpperCase()
+                    )
+                );
+
+                displayData(CardRecipes);
+                totalRecipes(CardRecipes);
+              }
             }
 
             // i: The position of the first item to delete; 1: number of items to delete
