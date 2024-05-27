@@ -135,8 +135,6 @@ function filterFunction(dropdownId, dropdownListId) {
   const div = document.getElementById(dropdownListId);
   const a = div.getElementsByTagName("a");
 
-  console.log(filter);
-
   for (i = 0; i < a.length; i++) {
     const txtValue = a[i].textContent || a[i].innerText;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
