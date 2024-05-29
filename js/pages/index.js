@@ -6,12 +6,6 @@ import { getFiltersDOM, displayFiltersData } from "../template/filters.js";
 const originalRecipes = [...recipes];
 export const recipesToDisplay = [...originalRecipes];
 
-// Main header search bar
-const mainSearch = [];
-
-// Filters
-const filters = [];
-
 // Array of Recipes Name, description and ingredients
 const arrayOfRecipesName = recipesToDisplay.map((recipes) => recipes.name);
 const arrayOfRecipesDescription = recipesToDisplay.map(
@@ -154,10 +148,6 @@ displayFiltersData("ustensils");
 export function totalRecipes(totalRecipes) {
   const recipesCount = document.querySelector(".number-of-recipes p");
   const initialValue = totalRecipes.length;
-  //   const totalRecipes = recipes.reduce(
-  //     (accumulator, recipe) => accumulator + recipe.id,
-  //     initialValue
-  //   );
   recipesCount.textContent = `${initialValue} recettes`;
 }
 
