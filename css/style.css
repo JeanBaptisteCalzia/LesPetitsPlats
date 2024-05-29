@@ -10542,8 +10542,17 @@ main {
   .btn-group > .btn-group .btn {
     padding: 1rem 1rem;
     border-radius: 0.75rem; }
+    .btn-group > .btn-group .btn-open {
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important; }
   .btn-group > .btn-group .dropdown-menu {
-    position: relative; }
+    display: none; }
+    .btn-group > .btn-group .dropdown-menu.show {
+      display: block;
+      position: absolute;
+      inset: 0px auto auto 0px;
+      margin: 0px;
+      transform: translate(0px, 60px); }
     .btn-group > .btn-group .dropdown-menu__container {
       position: relative;
       max-height: 16.5rem;

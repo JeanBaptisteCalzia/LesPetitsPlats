@@ -355,10 +355,23 @@ main {
     .btn {
       padding: 1rem 1rem;
       border-radius: 0.75rem;
+
+      &-open {
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
     }
 
     .dropdown-menu {
-      position: relative;
+      display: none;
+
+      &.show {
+        display: block;
+        position: absolute;
+        inset: 0px auto auto 0px;
+        margin: 0px;
+        transform: translate(0px, 60px);
+      }
 
       &__container {
         position: relative;
