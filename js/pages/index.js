@@ -1,107 +1,81 @@
 import { recipes } from "../data/recipes.js";
-import { recipeTemplate, displayData } from "../template/recipes.js";
-import { getFiltersDOM, displayFiltersData } from "../template/filters.js";
+import { displayData } from "../template/recipes.js";
+// import { getFiltersDOM, displayFiltersData } from "../template/filters.js";
 
 // Recipes
 const originalRecipes = [...recipes];
-export const recipesToDisplay = [...originalRecipes];
-
-// Array of Recipes Name, description and ingredients
-const arrayOfRecipesName = recipesToDisplay.map((recipes) => recipes.name);
-const arrayOfRecipesDescription = recipesToDisplay.map(
-  (recipes) => recipes.description
-);
-
-const arrayOfRecipeIngredients = recipes.map(
-  (ingredient) => ingredient.ingredients
-);
-const ingredientsRecipeOnly = arrayOfRecipeIngredients
-  .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
-  .map((ingredient) => ingredient.ingredient);
-
-// Merge Arrays above
-const mergeArray = arrayOfRecipesName.concat(
-  arrayOfRecipesDescription,
-  ingredientsRecipeOnly
-);
-
-const arrayOfRecipesNameAndDescriptionAndIngredients = mergeArray.map(
-  (value) => {
-    return value.toUpperCase();
-  }
-);
+let recipesToDisplay = [...originalRecipes];
 
 // DOM Elements
 const inputSearch = document.getElementById("search-recipes");
 const btnSearch = document.querySelector(".btn-search");
 const btnClearSearch = document.querySelector(".btn-clear");
 const cardsContainer = document.querySelector(".cards");
-export let filterRecipes = recipesToDisplay;
 
-// Create recipes card list
-const generateRecipesList = () => {
-  cardsContainer.innerHTML = "";
+// Display numbers total of Recipes
+function totalRecipes() {
+  const recipesCount = document.querySelector(".number-of-recipes p");
+  if (recipesToDisplay.length > 1) {
+    recipesCount.textContent = `${recipesToDisplay.length} recettes`;
+  } else {
+    recipesCount.textContent = `${recipesToDisplay.length} recette`;
+  }
+}
 
-  const inputSearchValue = inputSearch.value.toUpperCase();
+// Update display on search or by filters
+function refreshDisplay() {
+  displayData(recipesToDisplay);
+  totalRecipes();
+  // TODO : refresh filters list
+}
+
+// Launch refreshDisplay function on searchUpdated custom event
+document.addEventListener("searchUpdated", () => {
+  refreshDisplay();
+});
+
+const refreshEvent = new CustomEvent("searchUpdated");
+document.dispatchEvent(refreshEvent);
+
+// Main search
+inputSearch.addEventListener("input", (event) => {
+  let inputSearchValue = event.target.value.toUpperCase();
 
   if (inputSearchValue.length > 2) {
-    for (
-      let i = 0;
-      i < arrayOfRecipesNameAndDescriptionAndIngredients.length;
-      i++
-    ) {
-      if (
-        arrayOfRecipesNameAndDescriptionAndIngredients.indexOf(
-          inputSearchValue
-        ) > -1
-      ) {
-        cardsContainer.innerHTML = "";
-        filterRecipes = recipesToDisplay.filter(
-          (obj) =>
-            obj.name.toUpperCase() === inputSearchValue ||
-            obj.description.toUpperCase() === inputSearchValue ||
-            obj.ingredients.some(
-              (item) => item.ingredient.toUpperCase() === inputSearchValue
-            )
-        );
-        displayData(filterRecipes);
-        totalRecipes(filterRecipes);
-      }
+    recipesToDisplay = recipesToDisplay.filter(
+      (recipe) =>
+        recipe.name.toUpperCase().includes(inputSearchValue) ||
+        recipe.description.toUpperCase().includes(inputSearchValue) ||
+        recipe.ingredients.some((item) =>
+          item.ingredient.toUpperCase().includes(inputSearchValue)
+        )
+    );
 
-      if (cardsContainer.innerHTML === "") {
-        cardsContainer.innerHTML += `Aucune recette ne contient « ${inputSearchValue} » vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
+    document.dispatchEvent(refreshEvent);
 
-        filterRecipes = recipesToDisplay.filter(
-          (obj) =>
-            obj.name.toUpperCase() === inputSearchValue ||
-            obj.description.toUpperCase() === inputSearchValue ||
-            obj.ingredients.some(
-              (item) => item.ingredient.toUpperCase() === inputSearchValue
-            )
-        );
-        totalRecipes(filterRecipes);
-      }
+    console.log(recipesToDisplay);
+
+    if (recipesToDisplay.length === 0) {
+      cardsContainer.innerHTML += `Aucune recette ne contient « ${inputSearchValue} » vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
     }
   } else {
-    displayData(recipesToDisplay);
-    totalRecipes(recipesToDisplay);
+    recipesToDisplay = [...originalRecipes];
+    refreshDisplay();
   }
-};
-
-generateRecipesList();
-inputSearch.addEventListener("keyup", generateRecipesList);
+});
 
 // Search recipes on click
 btnSearch.addEventListener("click", (event) => {
   event.preventDefault();
-  generateRecipesList(inputSearch);
+  document.dispatchEvent(refreshEvent);
 });
 
 // Clear input search value on click
 btnClearSearch.addEventListener("click", (event) => {
   event.preventDefault();
   inputSearch.value = "";
-  generateRecipesList(inputSearch);
+  recipesToDisplay = [...originalRecipes];
+  refreshDisplay();
 });
 
 // Search input dropdown
@@ -140,18 +114,9 @@ function filterFunction(dropdownId, dropdownListId) {
 }
 
 // Display Filters Dropdown
-displayFiltersData("ingredients");
-displayFiltersData("appliance");
-displayFiltersData("ustensils");
-
-// Display numbers total of Recipes
-export function totalRecipes(totalRecipes) {
-  const recipesCount = document.querySelector(".number-of-recipes p");
-  const initialValue = totalRecipes.length;
-  recipesCount.textContent = `${initialValue} recettes`;
-}
-
-totalRecipes(filterRecipes);
+// displayFiltersData("ingredients");
+// displayFiltersData("appliance");
+// displayFiltersData("ustensils");
 
 // Dropdown menu filters tags
 const btnGroupIngredients = document.querySelector("#btnGroupDrop1");

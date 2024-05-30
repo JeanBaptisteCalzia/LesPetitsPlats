@@ -140,6 +140,7 @@ export function recipeTemplate(data) {
 // Display Cards template
 export function displayData(recipes) {
   const cardsSection = document.querySelector(".cards");
+  cardsSection.innerHTML = "";
 
   recipes.forEach((recipe) => {
     const recipeModel = recipeTemplate(recipe);
