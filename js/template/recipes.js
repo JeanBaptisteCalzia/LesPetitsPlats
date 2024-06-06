@@ -138,13 +138,17 @@ export function recipeTemplate(data) {
 }
 
 // Display Cards template
-export function displayData(recipes) {
+export function displayData(recipes, inputSearchValue = "") {
   const cardsSection = document.querySelector(".cards");
   cardsSection.innerHTML = "";
 
-  recipes.forEach((recipe) => {
-    const recipeModel = recipeTemplate(recipe);
-    const recipeCardDOM = recipeModel.getRecipeCardDOM();
-    cardsSection.appendChild(recipeCardDOM);
-  });
+  if (recipes.length > 0) {
+    recipes.forEach((recipe) => {
+      const recipeModel = recipeTemplate(recipe);
+      const recipeCardDOM = recipeModel.getRecipeCardDOM();
+      cardsSection.appendChild(recipeCardDOM);
+    });
+  } else {
+    cardsSection.innerHTML += `Aucune recette ne contient « ${inputSearchValue} » vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
+  }
 }
