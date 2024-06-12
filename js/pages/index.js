@@ -48,6 +48,7 @@ function search() {
 
   for (let i = 0; i < tagsFiltersLength; i++) {
     const searchTags = filters[i];
+
     recipesToDisplay =
       recipesToDisplay.filter((recipe) =>
         recipe.appliance.toUpperCase().includes(searchTags)
@@ -64,7 +65,6 @@ function search() {
           )
       );
   }
-
   refreshDisplay();
 }
 
@@ -88,7 +88,7 @@ inputSearch.addEventListener("input", (event) => {
 // Display numbers total of Recipes
 function totalRecipes() {
   const recipesCount = document.querySelector(".number-of-recipes p");
-  if (recipesToDisplay.length != 0) {
+  if (recipesToDisplay.length > 1) {
     recipesCount.textContent = `${recipesToDisplay.length} recettes`;
   } else {
     recipesCount.textContent = `${recipesToDisplay.length} recette`;
@@ -285,8 +285,9 @@ const ingredientsDropdown = document.getElementById("ingredients");
 // Filtering by appliances on click event
 applianceDropdown.addEventListener("click", (e) => {
   let listItem = e.target.classList.contains("dropdown-item");
-  filters = [];
-  search();
+
+  recipesToDisplay = [...originalRecipes];
+  filters;
 
   if (listItem) {
     let tagValue = e.target.textContent.toUpperCase();
@@ -299,7 +300,7 @@ applianceDropdown.addEventListener("click", (e) => {
       if (tagValue == recipesToDisplay[i].appliance.toUpperCase()) {
         filters.push(recipesToDisplay[i].appliance.toUpperCase());
 
-        let numberOfLi = filters.length;
+        let numberOfLi = filterApplianceRecipes.length;
         const tags = document.querySelector(".tags ul");
         const btn = document.createElement("button");
         const li = document.createElement("li");
@@ -308,47 +309,37 @@ applianceDropdown.addEventListener("click", (e) => {
         const icon = document.createElement("i");
         const listDropdown = document.getElementById("appliance");
 
+        let filterApplianceRecipesTouppercase = String(filterApplianceRecipes)
+          .toUpperCase()
+          .split(",");
+
         while (i < numberOfLi) {
-          li.setAttribute("class", "list-group-item");
-          li.appendChild(btn);
-          btn.setAttribute("class", "btn");
-          btn.setAttribute("type", "button");
-          btn.appendChild(span);
-          btn.appendChild(spanIcon);
-          span.textContent = tagValue;
-          spanIcon.setAttribute("class", "badge");
-          spanIcon.appendChild(icon);
-          icon.setAttribute("class", "fa-solid fa-xmark");
-          tags.appendChild(li);
-          // i: The position of the first item to delete; 1: number of items to delete
-          filterApplianceRecipes.splice(i, 1);
-          const Currentindex = i;
+          if (tagValue == filterApplianceRecipesTouppercase[i]) {
+            li.setAttribute("class", "list-group-item");
+            li.appendChild(btn);
+            btn.setAttribute("class", "btn");
+            btn.setAttribute("type", "button");
+            btn.appendChild(span);
+            btn.appendChild(spanIcon);
+            span.textContent = tagValue;
+            spanIcon.setAttribute("class", "badge");
+            spanIcon.appendChild(icon);
+            icon.setAttribute("class", "fa-solid fa-xmark");
+            tags.appendChild(li);
+            const Currentindex = i;
 
-          // Remove tags
-          li.addEventListener("click", (event) => {
-            const listItems = document.querySelectorAll(".tags ul li");
+            // i: The position of the first item to delete; 1: number of items to delete
+            filterApplianceRecipes.splice(i, 1);
 
-            if (listItems.length == 1 && inputSearch.value == "") {
-              event.currentTarget.remove(li);
-
-              filterApplianceRecipes.splice(Currentindex, 0, tagValue);
-
-              recipesToDisplay = [...originalRecipes];
-
-              listDropdown.innerHTML = "";
-              refreshDisplay();
-              displayFiltersData("appliance");
-            } else {
-              // TO DO
-              // function removeItem(array, itemToRemove) {
-              //   const index = array.indexOf(itemToRemove);
-
-              //   if (index !== -1) {
-              //     array.splice(index, 1);
-              //   }
-              // }
-
-              // removeItem(recipesToDisplay, Currentindex);
+            // Remove tags
+            li.addEventListener("click", (event) => {
+              const index = filters.indexOf(tagValue);
+              if (index > -1) {
+                // only splice array when item is found
+                filters.splice(index, 1); // 2nd parameter means remove one item only
+                cardsContent.innerHTML = "";
+                search();
+              }
 
               event.currentTarget.remove(li);
               // Currentindex: The starting position to insert; 0: instructs the splice() method to not delete any array elements; item : element to insert
@@ -357,9 +348,8 @@ applianceDropdown.addEventListener("click", (e) => {
               listDropdown.innerHTML = "";
               refreshDisplay();
               displayFiltersData("appliance");
-            }
-          });
-
+            });
+          }
           i++;
         }
       }
@@ -368,70 +358,3 @@ applianceDropdown.addEventListener("click", (e) => {
   cardsContent.innerHTML = "";
   search();
 });
-
-// function addRemoveTags(item, filter, id) {
-//   let i = 0;
-//   let numberOfLi = filter.length;
-//   const tags = document.querySelector(".tags ul");
-//   const btn = document.createElement("button");
-//   const li = document.createElement("li");
-//   const span = document.createElement("span");
-//   const spanIcon = document.createElement("span");
-//   const icon = document.createElement("i");
-//   const listDropdown = document.getElementById(id);
-
-//   while (i < numberOfLi) {
-//     if (item == filter[i]) {
-//       li.setAttribute("class", "list-group-item");
-//       li.appendChild(btn);
-//       btn.setAttribute("class", "btn");
-//       btn.setAttribute("type", "button");
-//       btn.appendChild(span);
-//       btn.appendChild(spanIcon);
-//       span.textContent = item;
-//       spanIcon.setAttribute("class", "badge");
-//       spanIcon.appendChild(icon);
-//       icon.setAttribute("class", "fa-solid fa-xmark");
-//       tags.appendChild(li);
-//       // i: The position of the first item to delete; 1: number of items to delete
-//       filter.splice(i, 1);
-//       const Currentindex = i;
-
-//       // Remove tags
-//       // li.addEventListener("click", (event) => {
-//       //   const listItems = document.querySelectorAll(".tags ul li");
-
-//       //   if (listItems.length == 1 && inputSearch.value == "") {
-//       //     event.currentTarget.remove(li);
-//       //     filter.splice(Currentindex, 0, item);
-
-//       //     recipesToDisplay = [...originalRecipes];
-
-//       //     listDropdown.innerHTML = "";
-//       //     refreshDisplay();
-//       //     displayFiltersData(id);
-//       //   } else {
-//       //     // TO DO
-//       //     // function removeItem(array, itemToRemove) {
-//       //     //   const index = array.indexOf(itemToRemove);
-
-//       //     //   if (index !== -1) {
-//       //     //     array.splice(index, 1);
-//       //     //   }
-//       //     // }
-
-//       //     // removeItem(recipesToDisplay, Currentindex);
-
-//       //     event.currentTarget.remove(li);
-//       //     // Currentindex: The starting position to insert; 0: instructs the splice() method to not delete any array elements; item : element to insert
-//       //     filter.splice(Currentindex, 0, item);
-
-//       //     listDropdown.innerHTML = "";
-//       //     refreshDisplay();
-//       //     displayFiltersData(id);
-//       //   }
-//       // });
-//     }
-//     i++;
-//   }
-// }
