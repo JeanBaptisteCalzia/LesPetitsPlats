@@ -1,4 +1,5 @@
 import { recipes } from "../data/recipes.js";
+import { filters, search } from "../pages/index.js";
 
 // Retrieve Appliance elements
 const applianceRecipe = recipes.map((appliance) => appliance.appliance);
@@ -41,7 +42,7 @@ export function getFiltersDOM(id) {
   // Display Appliances
   if (id === "appliance") {
     let numberOfLi = filterApplianceRecipes.length;
-    listDropdown.textContent = "";
+    listDropdown.innerHTML = "";
 
     for (let i = 0; i < numberOfLi; i++) {
       const list = document.createElement("li");
@@ -53,10 +54,10 @@ export function getFiltersDOM(id) {
     }
   }
 
-  // Display Ustencils
+  // Display Ustensils
   if (id === "ustensils") {
     let numberOfLi = filterUstensilsRecipes.length;
-    listDropdown.textContent = "";
+    listDropdown.innerHTML = "";
 
     for (let i = 0; i < numberOfLi; i++) {
       const list = document.createElement("li");
@@ -71,7 +72,7 @@ export function getFiltersDOM(id) {
   // Display Ingredients
   if (id === "ingredients") {
     let numberOfLi = filterIngredientsRecipes.length;
-    listDropdown.textContent = "";
+    listDropdown.innerHTML = "";
 
     for (let i = 0; i < numberOfLi; i++) {
       const list = document.createElement("li");
@@ -91,4 +92,92 @@ export function displayFiltersData(id) {
   const filtersSection = document.getElementById(id);
   const filtersCardDOM = getFiltersDOM(id);
   filtersSection.contains(filtersCardDOM);
+}
+
+// Tags template
+function getTagsDOM(id, tagValue) {
+  // Wrapper
+  const wrapper = document.getElementById(id);
+  const tags = document.querySelector(".tags ul");
+  const btn = document.createElement("button");
+  const li = document.createElement("li");
+  const span = document.createElement("span");
+  const capitalizedSpan =
+    tagValue.toLowerCase().charAt(0).toUpperCase() +
+    tagValue.toLowerCase().slice(1);
+  const spanIcon = document.createElement("span");
+  const icon = document.createElement("i");
+
+  li.setAttribute("class", "list-group-item");
+  li.appendChild(btn);
+  btn.setAttribute("class", "btn");
+  btn.setAttribute("type", "button");
+  btn.appendChild(span);
+  btn.appendChild(spanIcon);
+  span.textContent = capitalizedSpan;
+  spanIcon.setAttribute("class", "badge");
+  spanIcon.appendChild(icon);
+  icon.setAttribute("class", "fa-solid fa-xmark");
+  tags.appendChild(li);
+
+  return wrapper;
+}
+
+// Display Tags template
+export function displayTags(id, tagValue, array) {
+  const tagsSection = document.querySelector(".tags ul");
+  const tagsDOM = getTagsDOM(id, tagValue);
+  const li = document.querySelectorAll(".list-group-item");
+  const listDropdown = document.getElementById(id);
+  const index = filters.indexOf(tagValue);
+
+  // const arrayUppercase = array.map((item) => item.toUpperCase());
+  // const i = arrayUppercase.indexOf(tagValue);
+
+  // console.log("Tag value from Dropdown list");
+  // console.log(i);
+  // console.log("-------------------");
+
+  console.log("Tag value from filters");
+  console.log(index);
+  console.log(filters);
+  console.log("-------------------");
+
+  tagsSection.contains(tagsDOM);
+
+  // Remove tags
+  li.forEach((element) => {
+    element.addEventListener("click", (event) => {
+      event.currentTarget.remove(li);
+
+      if (index > -1) {
+        // only splice array when item is found
+        filters.splice(index, 1); // 2nd parameter means remove one item only
+        // listDropdown.innerHTML = "";
+
+        // const cardsSection = document.querySelector(".cards");
+        // cardsSection.innerHTML = "";
+        // search();
+
+        if (filters.length === 0) {
+          console.log("Empty");
+        }
+
+        console.log("Remove Tag value");
+        console.log(index);
+        console.log(filters);
+        console.log("-------------------");
+      }
+
+      // Insert elements to dropdown (Ingredients, appliances, ustensils)
+      // i: The starting position to insert; 0: instructs the splice() method to not delete any array elements; capitalizedTagValue : element to insert
+      // const capitalizedTagValue =
+      //   tagValue.toLowerCase().charAt(0).toUpperCase() +
+      //   tagValue.toLowerCase().slice(1);
+      // array.splice(i, 0, capitalizedTagValue);
+
+      // listDropdown.innerHTML = "";
+      search();
+    });
+  });
 }

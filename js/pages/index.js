@@ -2,7 +2,7 @@ import { recipes } from "../data/recipes.js";
 import { displayData } from "../template/recipes.js";
 import {
   displayFiltersData,
-  getFiltersDOM,
+  displayTags,
   filterApplianceRecipes,
   filterUstensilsRecipes,
   filterIngredientsRecipes,
@@ -12,15 +12,15 @@ export let originalRecipes = [...recipes];
 export let recipesToDisplay = [...originalRecipes];
 
 let mainSearch = []; // tableau de string
-let filters = []; // tableau d'objets de type => { type: '', name: '' }
+export let filters = []; // tableau d'objets de type => { type: '', name: '' }
 
 // DOM Elements
 const inputSearch = document.getElementById("search-recipes");
 const btnSearch = document.querySelector(".btn-search");
 const btnClearSearch = document.querySelector(".btn-clear");
-const cardsContent = document.querySelector(".cards");
+// const cardsContent = document.querySelector(".cards");
 
-function search() {
+export function search() {
   // Vu qu'on est maintenant dans une unique fonction de recherche
   // on peut commencer par réinitialiser la liste des recettes
   recipesToDisplay = [...originalRecipes];
@@ -49,21 +49,16 @@ function search() {
   for (let i = 0; i < tagsFiltersLength; i++) {
     const searchTags = filters[i];
 
-    recipesToDisplay =
-      recipesToDisplay.filter((recipe) =>
-        recipe.appliance.toUpperCase().includes(searchTags)
-      ) ||
-      recipesToDisplay.filter(
-        (recipe) =>
-          recipe.ustensils.some((ustensil) =>
-            ustensil.toUpperCase().includes(searchTags)
-          ) ||
-          recipesToDisplay.filter((recipe) =>
-            recipe.ingredients.some((ingredient) =>
-              ingredient.ingredient.toUpperCase().includes(searchTags)
-            )
-          )
-      );
+    recipesToDisplay = recipesToDisplay.filter(
+      (recipe) =>
+        recipe.appliance.toUpperCase().includes(searchTags) ||
+        recipe.ustensils.some((ustensil) =>
+          ustensil.toUpperCase().includes(searchTags)
+        ) ||
+        recipe.ingredients.some((ingredient) =>
+          ingredient.ingredient.toUpperCase().includes(searchTags)
+        )
+    );
   }
   refreshDisplay();
 }
@@ -121,7 +116,6 @@ btnClearSearch.addEventListener("click", (event) => {
   btnClearSearch.style.display = "none";
   mainSearch = [];
   search();
-  refreshDisplay();
 });
 
 // Search input dropdown
@@ -180,7 +174,6 @@ function filterFunction(dropdownId, dropdownListId, btnClearSearch) {
       searchIngredients.value = "";
       mainSearch = [];
       search();
-      refreshDisplay();
     });
   } else {
     btnClearSearchDropdown.style.display = "none";
@@ -230,131 +223,26 @@ const ustensilsDropdown = document.getElementById("ustensils");
 const applianceDropdown = document.getElementById("appliance");
 const ingredientsDropdown = document.getElementById("ingredients");
 
-// Filtering by ustensils on click event
-// ustensilsDropdown.addEventListener("click", (e) => {
-//   let listItem = e.target.classList.contains("dropdown-item");
-
-//   if (listItem) {
-//     filters = [];
-//     let tagValue = e.target.textContent.toUpperCase();
-
-//     recipesToDisplay = recipesToDisplay.filter((recipe) =>
-//       recipe.ustensils.some((ustensil) =>
-//         ustensil.toUpperCase().includes(tagValue)
-//       )
-//     );
-
-//     if (tagValue == recipesToDisplay) {
-//       for (let i = 0; i < recipesToDisplay.length; i++) {
-//         filters.push(recipesToDisplay[i]);
-//       }
-//     }
-
-//     cardsContent.innerHTML = "";
-//     // addRemoveTags(tagValue, recipesToDisplay, "ustensils");
-//     refreshDisplay();
-//   }
-// });
-
-// Filtering by ingredients on click event
-// ingredientsDropdown.addEventListener("click", (e) => {
-//   let listItem = e.target.classList.contains("dropdown-item");
-
-//   if (listItem) {
-//     filters = [];
-//     let tagValue = e.target.textContent.toUpperCase();
-
-//     recipesToDisplay = recipesToDisplay.filter((recipe) =>
-//       recipe.ingredients.some((ingredient) =>
-//         ingredient.ingredient.toUpperCase().includes(tagValue)
-//       )
-//     );
-
-//     if (tagValue === recipesToDisplay) {
-//       for (let i = 0; i < recipesToDisplay.length; i++) {
-//         filters.push(recipesToDisplay[i]);
-//       }
-//     }
-
-//     cardsContent.innerHTML = "";
-//     // addRemoveTags(tagValue, recipesToDisplay, "ingredients");
-//     refreshDisplay();
-//   }
-// });
-
 // Filtering by appliances on click event
 applianceDropdown.addEventListener("click", (e) => {
-  let listItem = e.target.classList.contains("dropdown-item");
+  let tagValue = e.target.textContent.toUpperCase();
+  filters.push(tagValue);
+  displayTags("appliance", tagValue, filterApplianceRecipes);
+  search();
+});
 
-  recipesToDisplay = [...originalRecipes];
-  filters;
+// Filtering by ustensils on click event
+ustensilsDropdown.addEventListener("click", (e) => {
+  let tagValue = e.target.textContent.toUpperCase();
+  filters.push(tagValue);
+  displayTags("ustensils", tagValue, filterUstensilsRecipes);
+  search();
+});
 
-  if (listItem) {
-    let tagValue = e.target.textContent.toUpperCase();
-
-    recipesToDisplay = recipesToDisplay.filter((recipe) =>
-      recipe.appliance.toUpperCase().includes(tagValue)
-    );
-
-    for (let i = 0; i < recipesToDisplay.length; i++) {
-      if (tagValue == recipesToDisplay[i].appliance.toUpperCase()) {
-        filters.push(recipesToDisplay[i].appliance.toUpperCase());
-
-        let numberOfLi = filterApplianceRecipes.length;
-        const tags = document.querySelector(".tags ul");
-        const btn = document.createElement("button");
-        const li = document.createElement("li");
-        const span = document.createElement("span");
-        const spanIcon = document.createElement("span");
-        const icon = document.createElement("i");
-        const listDropdown = document.getElementById("appliance");
-
-        let filterApplianceRecipesTouppercase = String(filterApplianceRecipes)
-          .toUpperCase()
-          .split(",");
-
-        while (i < numberOfLi) {
-          if (tagValue == filterApplianceRecipesTouppercase[i]) {
-            li.setAttribute("class", "list-group-item");
-            li.appendChild(btn);
-            btn.setAttribute("class", "btn");
-            btn.setAttribute("type", "button");
-            btn.appendChild(span);
-            btn.appendChild(spanIcon);
-            span.textContent = tagValue;
-            spanIcon.setAttribute("class", "badge");
-            spanIcon.appendChild(icon);
-            icon.setAttribute("class", "fa-solid fa-xmark");
-            tags.appendChild(li);
-            const Currentindex = i;
-
-            // i: The position of the first item to delete; 1: number of items to delete
-            filterApplianceRecipes.splice(i, 1);
-
-            // Remove tags
-            li.addEventListener("click", (event) => {
-              const index = filters.indexOf(tagValue);
-              if (index > -1) {
-                // only splice array when item is found
-                filters.splice(index, 1); // 2nd parameter means remove one item only
-                cardsContent.innerHTML = "";
-                search();
-              }
-
-              event.currentTarget.remove(li);
-              // Currentindex: The starting position to insert; 0: instructs the splice() method to not delete any array elements; item : element to insert
-              filterApplianceRecipes.splice(Currentindex, 0, tagValue);
-
-              listDropdown.innerHTML = "";
-              refreshDisplay();
-              displayFiltersData("appliance");
-            });
-          }
-          i++;
-        }
-      }
-    }
-  }
-  cardsContent.innerHTML = "";
+// Filtering by ingredients on click event
+ingredientsDropdown.addEventListener("click", (e) => {
+  let tagValue = e.target.textContent.toUpperCase();
+  filters.push(tagValue);
+  displayTags("ingredients", tagValue, filterIngredientsRecipes);
   search();
 });
