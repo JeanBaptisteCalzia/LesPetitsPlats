@@ -216,27 +216,14 @@ btnGroupUstensils.addEventListener("click", () => {
 });
 
 // DOM Elements
-const ustensilsDropdown = document.getElementById("ustensils");
-const applianceDropdown = document.getElementById("appliance");
-const ingredientsDropdown = document.getElementById("ingredients");
+let dropdowns = document.querySelectorAll(".dropdown-menu__container ul");
 
-// Filtering by appliances on click event
-applianceDropdown.addEventListener("click", (e) => {
-  let tagValue = e.target.textContent.toUpperCase();
-  filters.push({ type: "appliance", name: tagValue });
-  search();
-});
-
-// Filtering by ustensils on click event
-ustensilsDropdown.addEventListener("click", (e) => {
-  let tagValue = e.target.textContent.toUpperCase();
-  filters.push({ type: "ustensils", name: tagValue });
-  search();
-});
-
-// Filtering by ingredients on click event
-ingredientsDropdown.addEventListener("click", (e) => {
-  let tagValue = e.target.textContent.toUpperCase();
-  filters.push({ type: "ingredients", name: tagValue });
-  search();
+// Filtering by appliances, ustensils, ingredients on click event
+dropdowns.forEach((element) => {
+  element.addEventListener("click", (e) => {
+    let tagValue = e.target.textContent.toUpperCase();
+    let tagType = e.currentTarget.dataset.id;
+    filters.push({ type: tagType, name: tagValue });
+    search();
+  });
 });
