@@ -47,7 +47,9 @@ export function search() {
   const tagsFiltersLength = filters.length;
 
   for (let i = 0; i < tagsFiltersLength; i++) {
-    const searchTags = filters[i];
+    const filter = filters[i];
+    const tagType = filter.type;
+    const searchTags = filter.name;
 
     recipesToDisplay = recipesToDisplay.filter(
       (recipe) =>
@@ -98,10 +100,14 @@ export function refreshDisplay() {
   displayFiltersData("ingredients");
   displayFiltersData("appliance");
   displayFiltersData("ustensils");
+  // Display Tags
+  displayTags(filterIngredientsRecipes);
+  displayTags(filterApplianceRecipes);
+  displayTags(filterUstensilsRecipes);
 }
 
-// Launch refreshDisplay once page is loaded
-refreshDisplay();
+// Launch Search once page is loaded
+search();
 
 // Search recipes on click
 btnSearch.addEventListener("click", (event) => {
@@ -226,23 +232,20 @@ const ingredientsDropdown = document.getElementById("ingredients");
 // Filtering by appliances on click event
 applianceDropdown.addEventListener("click", (e) => {
   let tagValue = e.target.textContent.toUpperCase();
-  filters.push(tagValue);
-  displayTags("appliance", tagValue, filterApplianceRecipes);
+  filters.push({ type: "appliance", name: tagValue });
   search();
 });
 
 // Filtering by ustensils on click event
 ustensilsDropdown.addEventListener("click", (e) => {
   let tagValue = e.target.textContent.toUpperCase();
-  filters.push(tagValue);
-  displayTags("ustensils", tagValue, filterUstensilsRecipes);
+  filters.push({ type: "ustensils", name: tagValue });
   search();
 });
 
 // Filtering by ingredients on click event
 ingredientsDropdown.addEventListener("click", (e) => {
   let tagValue = e.target.textContent.toUpperCase();
-  filters.push(tagValue);
-  displayTags("ingredients", tagValue, filterIngredientsRecipes);
+  filters.push({ type: "ingredients", name: tagValue });
   search();
 });

@@ -33,6 +33,9 @@ export const filterApplianceRecipes = [...new Set(filterAppliance)];
 export const filterUstensilsRecipes = [...new Set(filterUstensils)];
 export const filterIngredientsRecipes = [...new Set(filterIngredients)];
 
+// Retrieve index of target element inside dropdowns (Ingredients, appliances, ustensils)
+let dropdownIndex;
+
 // Filters template
 export function getFiltersDOM(id) {
   // Wrapper
@@ -51,6 +54,21 @@ export function getFiltersDOM(id) {
       link.textContent = filterApplianceRecipes[i];
       list.appendChild(link);
       wrapper.appendChild(list);
+
+      list.addEventListener("click", (e) => {
+        let tagValue = e.target.textContent.toUpperCase();
+
+        const filterApplianceRecipesTouppercase = filterApplianceRecipes.map(
+          (item) => item.toUpperCase()
+        );
+
+        dropdownIndex = filterApplianceRecipesTouppercase.indexOf(tagValue);
+
+        if (dropdownIndex > -1) {
+          filterApplianceRecipes.splice(dropdownIndex, 1);
+          listDropdown.innerHTML = "";
+        }
+      });
     }
   }
 
@@ -66,6 +84,21 @@ export function getFiltersDOM(id) {
       link.textContent = filterUstensilsRecipes[i];
       list.appendChild(link);
       wrapper.appendChild(list);
+
+      list.addEventListener("click", (e) => {
+        let tagValue = e.target.textContent.toUpperCase();
+
+        const filterUstensilsRecipesTouppercase = filterUstensilsRecipes.map(
+          (item) => item.toUpperCase()
+        );
+
+        dropdownIndex = filterUstensilsRecipesTouppercase.indexOf(tagValue);
+
+        if (dropdownIndex > -1) {
+          filterUstensilsRecipes.splice(dropdownIndex, 1);
+          listDropdown.innerHTML = "";
+        }
+      });
     }
   }
 
@@ -81,6 +114,20 @@ export function getFiltersDOM(id) {
       link.textContent = filterIngredientsRecipes[i];
       list.appendChild(link);
       wrapper.appendChild(list);
+
+      list.addEventListener("click", (e) => {
+        let tagValue = e.target.textContent.toUpperCase();
+
+        const filterIngredientsRecipesTouppercase =
+          filterIngredientsRecipes.map((item) => item.toUpperCase());
+
+        dropdownIndex = filterIngredientsRecipesTouppercase.indexOf(tagValue);
+
+        if (dropdownIndex > -1) {
+          filterIngredientsRecipes.splice(dropdownIndex, 1);
+          listDropdown.innerHTML = "";
+        }
+      });
     }
   }
 
@@ -95,8 +142,7 @@ export function displayFiltersData(id) {
 }
 
 // Tags template
-function getTagsDOM(id, tagValue) {
-  // Wrapper
+function getTagsDOM(id, tagValue, array) {
   const wrapper = document.getElementById(id);
   const tags = document.querySelector(".tags ul");
   const btn = document.createElement("button");
@@ -107,8 +153,12 @@ function getTagsDOM(id, tagValue) {
     tagValue.toLowerCase().slice(1);
   const spanIcon = document.createElement("span");
   const icon = document.createElement("i");
+  const capitalizedTagValue =
+    tagValue.toLowerCase().charAt(0).toUpperCase() +
+    tagValue.toLowerCase().slice(1);
 
   li.setAttribute("class", "list-group-item");
+  li.setAttribute("type", id);
   li.appendChild(btn);
   btn.setAttribute("class", "btn");
   btn.setAttribute("type", "button");
@@ -120,64 +170,30 @@ function getTagsDOM(id, tagValue) {
   icon.setAttribute("class", "fa-solid fa-xmark");
   tags.appendChild(li);
 
+  li.addEventListener("click", () => {
+    const filterIndex = filters.findIndex(
+      (item) => item.type === id && item.name === tagValue
+    );
+
+    // Insert elements to dropdown (Ingredients, appliances, ustensils)
+    // dropdownIndex: The starting position to insert; 0: instructs the splice() method to not delete any array elements; capitalizedTagValue : element to insert
+    array.splice(dropdownIndex, 0, capitalizedTagValue);
+
+    // Delete tags elements
+    filters.splice(filterIndex, 1);
+
+    search();
+  });
+
   return wrapper;
 }
 
 // Display Tags template
-export function displayTags(id, tagValue, array) {
+export function displayTags(array) {
   const tagsSection = document.querySelector(".tags ul");
-  const tagsDOM = getTagsDOM(id, tagValue);
-  const li = document.querySelectorAll(".list-group-item");
-  const listDropdown = document.getElementById(id);
-  const index = filters.indexOf(tagValue);
+  tagsSection.innerHTML = "";
 
-  // const arrayUppercase = array.map((item) => item.toUpperCase());
-  // const i = arrayUppercase.indexOf(tagValue);
-
-  // console.log("Tag value from Dropdown list");
-  // console.log(i);
-  // console.log("-------------------");
-
-  console.log("Tag value from filters");
-  console.log(index);
-  console.log(filters);
-  console.log("-------------------");
-
-  tagsSection.contains(tagsDOM);
-
-  // Remove tags
-  li.forEach((element) => {
-    element.addEventListener("click", (event) => {
-      event.currentTarget.remove(li);
-
-      if (index > -1) {
-        // only splice array when item is found
-        filters.splice(index, 1); // 2nd parameter means remove one item only
-        // listDropdown.innerHTML = "";
-
-        // const cardsSection = document.querySelector(".cards");
-        // cardsSection.innerHTML = "";
-        // search();
-
-        if (filters.length === 0) {
-          console.log("Empty");
-        }
-
-        console.log("Remove Tag value");
-        console.log(index);
-        console.log(filters);
-        console.log("-------------------");
-      }
-
-      // Insert elements to dropdown (Ingredients, appliances, ustensils)
-      // i: The starting position to insert; 0: instructs the splice() method to not delete any array elements; capitalizedTagValue : element to insert
-      // const capitalizedTagValue =
-      //   tagValue.toLowerCase().charAt(0).toUpperCase() +
-      //   tagValue.toLowerCase().slice(1);
-      // array.splice(i, 0, capitalizedTagValue);
-
-      // listDropdown.innerHTML = "";
-      search();
-    });
+  filters.forEach((filter) => {
+    getTagsDOM(filter.type, filter.name, array);
   });
 }
