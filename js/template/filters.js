@@ -148,9 +148,6 @@ function getTagsDOM(id, tagValue, array) {
   const btn = document.createElement("button");
   const li = document.createElement("li");
   const span = document.createElement("span");
-  const capitalizedSpan =
-    tagValue.toLowerCase().charAt(0).toUpperCase() +
-    tagValue.toLowerCase().slice(1);
   const spanIcon = document.createElement("span");
   const icon = document.createElement("i");
   const capitalizedTagValue =
@@ -164,7 +161,7 @@ function getTagsDOM(id, tagValue, array) {
   btn.setAttribute("type", "button");
   btn.appendChild(span);
   btn.appendChild(spanIcon);
-  span.textContent = capitalizedSpan;
+  span.textContent = capitalizedTagValue;
   spanIcon.setAttribute("class", "badge");
   spanIcon.appendChild(icon);
   icon.setAttribute("class", "fa-solid fa-xmark");
