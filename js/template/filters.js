@@ -67,8 +67,6 @@ export function getFiltersDOM(id) {
         applianceDropdownIndex =
           filterApplianceRecipesTouppercase.indexOf(tagValue);
 
-        console.log(applianceDropdownIndex);
-
         if (applianceDropdownIndex > -1) {
           filterApplianceRecipes.splice(applianceDropdownIndex, 1);
           listDropdown.innerHTML = "";
