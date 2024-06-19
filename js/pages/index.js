@@ -186,38 +186,22 @@ function filterFunction(dropdownId, dropdownListId, btnClearSearch) {
   }
 }
 
+// DOM Element
+let btnGroupBtn = document.querySelectorAll(
+  ".filters-content .btn-group button"
+);
 // Dropdown menu filters tags
-const btnGroupIngredients = document.querySelector("#btnGroupDrop1");
-const btnGroupAppliance = document.querySelector("#btnGroupDrop2");
-const btnGroupUstensils = document.querySelector("#btnGroupDrop3");
-const dropDownMenuIngredients = document.querySelector(
-  "#btnGroupDrop1 ~ .dropdown-menu"
-);
-const dropDownMenuAppliance = document.querySelector(
-  "#btnGroupDrop2 ~ .dropdown-menu"
-);
-const dropDownMenuUstensils = document.querySelector(
-  "#btnGroupDrop3 ~ .dropdown-menu"
-);
-
-btnGroupIngredients.addEventListener("click", () => {
-  dropDownMenuIngredients.classList.toggle("show");
-  btnGroupIngredients.classList.toggle("btn-open");
+btnGroupBtn.forEach((element) => {
+  element.addEventListener("click", (e) => {
+    let dropDownMenu = e.target;
+    let dropDownMenuContent = dropDownMenu.nextElementSibling;
+    dropDownMenuContent.classList.toggle("show");
+    dropDownMenu.classList.toggle("btn-open");
+  });
 });
 
-btnGroupAppliance.addEventListener("click", () => {
-  dropDownMenuAppliance.classList.toggle("show");
-  btnGroupAppliance.classList.toggle("btn-open");
-});
-
-btnGroupUstensils.addEventListener("click", () => {
-  dropDownMenuUstensils.classList.toggle("show");
-  btnGroupUstensils.classList.toggle("btn-open");
-});
-
-// DOM Elements
+// DOM Element
 let dropdowns = document.querySelectorAll(".dropdown-menu__container ul");
-
 // Filtering by appliances, ustensils, ingredients on click event
 dropdowns.forEach((element) => {
   element.addEventListener("click", (e) => {
