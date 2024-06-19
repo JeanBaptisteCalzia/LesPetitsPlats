@@ -1,12 +1,6 @@
 import { recipes } from "../data/recipes.js";
 import { displayData } from "../template/recipes.js";
-import {
-  displayFiltersData,
-  displayTags,
-  filterApplianceRecipes,
-  filterUstensilsRecipes,
-  filterIngredientsRecipes,
-} from "../template/filters.js";
+import { displayFiltersData, displayTags } from "../template/filters.js";
 
 export let originalRecipes = [...recipes];
 export let recipesToDisplay = [...originalRecipes];
@@ -18,7 +12,6 @@ export let filters = []; // tableau d'objets de type => { type: '', name: '' }
 const inputSearch = document.getElementById("search-recipes");
 const btnSearch = document.querySelector(".btn-search");
 const btnClearSearch = document.querySelector(".btn-clear");
-// const cardsContent = document.querySelector(".cards");
 
 export function search() {
   // Vu qu'on est maintenant dans une unique fonction de recherche

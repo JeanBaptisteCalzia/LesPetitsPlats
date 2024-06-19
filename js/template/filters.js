@@ -34,7 +34,9 @@ export const filterUstensilsRecipes = [...new Set(filterUstensils)];
 export const filterIngredientsRecipes = [...new Set(filterIngredients)];
 
 // Retrieve index of target element inside dropdowns (Ingredients, appliances, ustensils)
-let dropdownIndex;
+let applianceDropdownIndex;
+let ustensilsDropdownIndex;
+let ingredientsDropdownIndex;
 
 // Filters template
 export function getFiltersDOM(id) {
@@ -62,10 +64,13 @@ export function getFiltersDOM(id) {
           (item) => item.toUpperCase()
         );
 
-        dropdownIndex = filterApplianceRecipesTouppercase.indexOf(tagValue);
+        applianceDropdownIndex =
+          filterApplianceRecipesTouppercase.indexOf(tagValue);
 
-        if (dropdownIndex > -1) {
-          filterApplianceRecipes.splice(dropdownIndex, 1);
+        console.log(applianceDropdownIndex);
+
+        if (applianceDropdownIndex > -1) {
+          filterApplianceRecipes.splice(applianceDropdownIndex, 1);
           listDropdown.innerHTML = "";
         }
       });
@@ -92,10 +97,11 @@ export function getFiltersDOM(id) {
           (item) => item.toUpperCase()
         );
 
-        dropdownIndex = filterUstensilsRecipesTouppercase.indexOf(tagValue);
+        ustensilsDropdownIndex =
+          filterUstensilsRecipesTouppercase.indexOf(tagValue);
 
-        if (dropdownIndex > -1) {
-          filterUstensilsRecipes.splice(dropdownIndex, 1);
+        if (ustensilsDropdownIndex > -1) {
+          filterUstensilsRecipes.splice(ustensilsDropdownIndex, 1);
           listDropdown.innerHTML = "";
         }
       });
@@ -121,10 +127,11 @@ export function getFiltersDOM(id) {
         const filterIngredientsRecipesTouppercase =
           filterIngredientsRecipes.map((item) => item.toUpperCase());
 
-        dropdownIndex = filterIngredientsRecipesTouppercase.indexOf(tagValue);
+        ingredientsDropdownIndex =
+          filterIngredientsRecipesTouppercase.indexOf(tagValue);
 
-        if (dropdownIndex > -1) {
-          filterIngredientsRecipes.splice(dropdownIndex, 1);
+        if (ingredientsDropdownIndex > -1) {
+          filterIngredientsRecipes.splice(ingredientsDropdownIndex, 1);
           listDropdown.innerHTML = "";
         }
       });
@@ -175,15 +182,27 @@ function getTagsDOM(id, tagValue) {
     // Insert elements to dropdown (Ingredients, appliances, ustensils)
     // dropdownIndex: The starting position to insert; 0: instructs the splice() method to not delete any array elements; capitalizedTagValue : element to insert
     if (id === "ingredients") {
-      filterIngredientsRecipes.splice(dropdownIndex, 0, capitalizedTagValue);
+      filterIngredientsRecipes.splice(
+        ingredientsDropdownIndex,
+        0,
+        capitalizedTagValue
+      );
     }
 
     if (id === "appliance") {
-      filterApplianceRecipes.splice(dropdownIndex, 0, capitalizedTagValue);
+      filterApplianceRecipes.splice(
+        applianceDropdownIndex,
+        0,
+        capitalizedTagValue
+      );
     }
 
     if (id === "ustensils") {
-      filterUstensilsRecipes.splice(dropdownIndex, 0, capitalizedTagValue);
+      filterUstensilsRecipes.splice(
+        ustensilsDropdownIndex,
+        0,
+        capitalizedTagValue
+      );
     }
 
     // Delete tags elements
