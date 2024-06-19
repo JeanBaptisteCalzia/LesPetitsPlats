@@ -101,9 +101,7 @@ export function refreshDisplay() {
   displayFiltersData("appliance");
   displayFiltersData("ustensils");
   // Display Tags
-  displayTags(filterIngredientsRecipes);
-  displayTags(filterApplianceRecipes);
-  displayTags(filterUstensilsRecipes);
+  displayTags();
 }
 
 // Launch Search once page is loaded

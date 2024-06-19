@@ -142,7 +142,7 @@ export function displayFiltersData(id) {
 }
 
 // Tags template
-function getTagsDOM(id, tagValue, array) {
+function getTagsDOM(id, tagValue) {
   const wrapper = document.getElementById(id);
   const tags = document.querySelector(".tags ul");
   const btn = document.createElement("button");
@@ -174,7 +174,17 @@ function getTagsDOM(id, tagValue, array) {
 
     // Insert elements to dropdown (Ingredients, appliances, ustensils)
     // dropdownIndex: The starting position to insert; 0: instructs the splice() method to not delete any array elements; capitalizedTagValue : element to insert
-    array.splice(dropdownIndex, 0, capitalizedTagValue);
+    if (id === "ingredients") {
+      filterIngredientsRecipes.splice(dropdownIndex, 0, capitalizedTagValue);
+    }
+
+    if (id === "appliance") {
+      filterApplianceRecipes.splice(dropdownIndex, 0, capitalizedTagValue);
+    }
+
+    if (id === "ustensils") {
+      filterUstensilsRecipes.splice(dropdownIndex, 0, capitalizedTagValue);
+    }
 
     // Delete tags elements
     filters.splice(filterIndex, 1);
@@ -186,11 +196,11 @@ function getTagsDOM(id, tagValue, array) {
 }
 
 // Display Tags template
-export function displayTags(array) {
+export function displayTags() {
   const tagsSection = document.querySelector(".tags ul");
   tagsSection.innerHTML = "";
 
   filters.forEach((filter) => {
-    getTagsDOM(filter.type, filter.name, array);
+    getTagsDOM(filter.type, filter.name);
   });
 }
