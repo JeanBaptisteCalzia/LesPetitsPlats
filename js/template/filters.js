@@ -33,121 +33,35 @@ export const filterApplianceRecipes = [...new Set(filterAppliance)];
 export const filterUstensilsRecipes = [...new Set(filterUstensils)];
 export const filterIngredientsRecipes = [...new Set(filterIngredients)];
 
-// Retrieve index of target element inside dropdowns (Ingredients, appliances, ustensils)
-let applianceDropdownIndex;
-let ustensilsDropdownIndex;
-let ingredientsDropdownIndex;
-
 // Filters template
-export function getFiltersDOM(id) {
-  // Wrapper
+export function getFiltersDOM(id, array) {
   const wrapper = document.getElementById(id);
   const listDropdown = document.getElementById(id);
+  let numberOfLi = array.length;
 
-  // Display Appliances
-  if (id === "appliance") {
-    let numberOfLi = filterApplianceRecipes.length;
-    listDropdown.innerHTML = "";
+  listDropdown.innerHTML = "";
 
-    for (let i = 0; i < numberOfLi; i++) {
-      const list = document.createElement("li");
-      const link = document.createElement("a");
-      link.setAttribute("class", "dropdown-item");
-      link.textContent = filterApplianceRecipes[i];
-      list.appendChild(link);
-      wrapper.appendChild(list);
-
-      list.addEventListener("click", (e) => {
-        let tagValue = e.target.textContent.toUpperCase();
-
-        const filterApplianceRecipesTouppercase = filterApplianceRecipes.map(
-          (item) => item.toUpperCase()
-        );
-
-        applianceDropdownIndex =
-          filterApplianceRecipesTouppercase.indexOf(tagValue);
-
-        if (applianceDropdownIndex > -1) {
-          filterApplianceRecipes.splice(applianceDropdownIndex, 1);
-          listDropdown.innerHTML = "";
-        }
-      });
-    }
-  }
-
-  // Display Ustensils
-  if (id === "ustensils") {
-    let numberOfLi = filterUstensilsRecipes.length;
-    listDropdown.innerHTML = "";
-
-    for (let i = 0; i < numberOfLi; i++) {
-      const list = document.createElement("li");
-      const link = document.createElement("a");
-      link.setAttribute("class", "dropdown-item");
-      link.textContent = filterUstensilsRecipes[i];
-      list.appendChild(link);
-      wrapper.appendChild(list);
-
-      list.addEventListener("click", (e) => {
-        let tagValue = e.target.textContent.toUpperCase();
-
-        const filterUstensilsRecipesTouppercase = filterUstensilsRecipes.map(
-          (item) => item.toUpperCase()
-        );
-
-        ustensilsDropdownIndex =
-          filterUstensilsRecipesTouppercase.indexOf(tagValue);
-
-        if (ustensilsDropdownIndex > -1) {
-          filterUstensilsRecipes.splice(ustensilsDropdownIndex, 1);
-          listDropdown.innerHTML = "";
-        }
-      });
-    }
-  }
-
-  // Display Ingredients
-  if (id === "ingredients") {
-    let numberOfLi = filterIngredientsRecipes.length;
-    listDropdown.innerHTML = "";
-
-    for (let i = 0; i < numberOfLi; i++) {
-      const list = document.createElement("li");
-      const link = document.createElement("a");
-      link.setAttribute("class", "dropdown-item");
-      link.textContent = filterIngredientsRecipes[i];
-      list.appendChild(link);
-      wrapper.appendChild(list);
-
-      list.addEventListener("click", (e) => {
-        let tagValue = e.target.textContent.toUpperCase();
-
-        const filterIngredientsRecipesTouppercase =
-          filterIngredientsRecipes.map((item) => item.toUpperCase());
-
-        ingredientsDropdownIndex =
-          filterIngredientsRecipesTouppercase.indexOf(tagValue);
-
-        if (ingredientsDropdownIndex > -1) {
-          filterIngredientsRecipes.splice(ingredientsDropdownIndex, 1);
-          listDropdown.innerHTML = "";
-        }
-      });
-    }
+  for (let i = 0; i < numberOfLi; i++) {
+    const list = document.createElement("li");
+    const link = document.createElement("a");
+    link.setAttribute("class", "dropdown-item");
+    link.textContent = array[i];
+    list.appendChild(link);
+    wrapper.appendChild(list);
   }
 
   return wrapper;
 }
 
 // Display Filters template
-export function displayFiltersData(id) {
+export function displayFiltersData(id, array) {
   const filtersSection = document.getElementById(id);
-  const filtersCardDOM = getFiltersDOM(id);
+  const filtersCardDOM = getFiltersDOM(id, array);
   filtersSection.contains(filtersCardDOM);
 }
 
 // Tags template
-function getTagsDOM(id, tagValue) {
+function getTagsDOM(id, tagValue, currentIndex) {
   const wrapper = document.getElementById(id);
   const tags = document.querySelector(".tags ul");
   const btn = document.createElement("button");
@@ -173,35 +87,21 @@ function getTagsDOM(id, tagValue) {
   tags.appendChild(li);
 
   li.addEventListener("click", () => {
-    const filterIndex = filters.findIndex(
-      (item) => item.type === id && item.name === tagValue
-    );
-
-    // Insert elements to dropdown (Ingredients, appliances, ustensils)
-    // dropdownIndex: The starting position to insert; 0: instructs the splice() method to not delete any array elements; capitalizedTagValue : element to insert
     if (id === "ingredients") {
-      filterIngredientsRecipes.splice(
-        ingredientsDropdownIndex,
-        0,
-        capitalizedTagValue
-      );
+      filterIngredientsRecipes.splice(currentIndex, 0, capitalizedTagValue);
     }
 
     if (id === "appliance") {
-      filterApplianceRecipes.splice(
-        applianceDropdownIndex,
-        0,
-        capitalizedTagValue
-      );
+      filterApplianceRecipes.splice(currentIndex, 0, capitalizedTagValue);
     }
 
     if (id === "ustensils") {
-      filterUstensilsRecipes.splice(
-        ustensilsDropdownIndex,
-        0,
-        capitalizedTagValue
-      );
+      filterUstensilsRecipes.splice(currentIndex, 0, capitalizedTagValue);
     }
+
+    const filterIndex = filters.findIndex(
+      (item) => item.type === id && item.name === tagValue
+    );
 
     // Delete tags elements
     filters.splice(filterIndex, 1);
@@ -218,6 +118,6 @@ export function displayTags() {
   tagsSection.innerHTML = "";
 
   filters.forEach((filter) => {
-    getTagsDOM(filter.type, filter.name);
+    getTagsDOM(filter.type, filter.name, filter.index);
   });
 }

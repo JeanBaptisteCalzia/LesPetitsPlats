@@ -1,6 +1,12 @@
 import { recipes } from "../data/recipes.js";
 import { displayData } from "../template/recipes.js";
-import { displayFiltersData, displayTags } from "../template/filters.js";
+import {
+  displayFiltersData,
+  displayTags,
+  filterUstensilsRecipes,
+  filterIngredientsRecipes,
+  filterApplianceRecipes,
+} from "../template/filters.js";
 
 export let originalRecipes = [...recipes];
 export let recipesToDisplay = [...originalRecipes];
@@ -90,9 +96,9 @@ export function refreshDisplay() {
   displayData(recipesToDisplay, mainSearch.toString());
   totalRecipes();
   // Display Filters Dropdown
-  displayFiltersData("ingredients");
-  displayFiltersData("appliance");
-  displayFiltersData("ustensils");
+  displayFiltersData("ingredients", filterIngredientsRecipes);
+  displayFiltersData("appliance", filterApplianceRecipes);
+  displayFiltersData("ustensils", filterUstensilsRecipes);
   // Display Tags
   displayTags();
 }
@@ -203,11 +209,42 @@ btnGroupBtn.forEach((element) => {
 // DOM Element
 let dropdowns = document.querySelectorAll(".dropdown-menu__container ul");
 // Filtering by appliances, ustensils, ingredients on click event
+
 dropdowns.forEach((element) => {
   element.addEventListener("click", (e) => {
     let tagValue = e.target.textContent.toUpperCase();
     let tagType = e.currentTarget.dataset.id;
-    filters.push({ type: tagType, name: tagValue });
+
+    if (tagType === "ingredients") {
+      const dropdownArray = filterIngredientsRecipes.map((item) =>
+        item.toUpperCase()
+      );
+      let tagIndex = dropdownArray.indexOf(tagValue);
+
+      filters.push({ type: tagType, name: tagValue, index: tagIndex });
+      filterIngredientsRecipes.splice(tagIndex, 1);
+    }
+
+    if (tagType === "appliance") {
+      const dropdownArray = filterApplianceRecipes.map((item) =>
+        item.toUpperCase()
+      );
+      let tagIndex = dropdownArray.indexOf(tagValue);
+
+      filters.push({ type: tagType, name: tagValue, index: tagIndex });
+      filterApplianceRecipes.splice(tagIndex, 1);
+    }
+
+    if (tagType === "ustensils") {
+      const dropdownArray = filterUstensilsRecipes.map((item) =>
+        item.toUpperCase()
+      );
+      let tagIndex = dropdownArray.indexOf(tagValue);
+
+      filters.push({ type: tagType, name: tagValue, index: tagIndex });
+      filterUstensilsRecipes.splice(tagIndex, 1);
+    }
+
     search();
   });
 });
