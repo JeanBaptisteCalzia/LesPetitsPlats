@@ -121,33 +121,19 @@ btnClearSearch.addEventListener("click", (event) => {
   search();
 });
 
-// Search input dropdown
-const inputSearchIngredients = document.getElementById("search-ingredient");
-const inputSearchAppliances = document.getElementById("search-appliance");
-const inputSearchUstensils = document.getElementById("search-ustensils");
+// DOM Element
+let inputSearchFilters = document.querySelectorAll(
+  ".filters-content form input"
+);
+// Input search dropdown
+inputSearchFilters.forEach((element) => {
+  element.addEventListener("keyup", (e) => {
+    let inputSearch = e.target;
+    let inputSearchId = e.currentTarget.dataset.input;
+    const inputSearchBtnclear = inputSearch.nextElementSibling;
 
-inputSearchIngredients.addEventListener("keyup", () => {
-  filterFunction(
-    inputSearchIngredients,
-    "ingredients",
-    "#search-ingredient + .btn-clear"
-  );
-});
-
-inputSearchAppliances.addEventListener("keyup", () => {
-  filterFunction(
-    inputSearchAppliances,
-    "appliance",
-    "#search-appliance + .btn-clear"
-  );
-});
-
-inputSearchUstensils.addEventListener("keyup", () => {
-  filterFunction(
-    inputSearchUstensils,
-    "ustensils",
-    "#search-ustensils + .btn-clear"
-  );
+    filterFunction(inputSearch, inputSearchId, inputSearchBtnclear);
+  });
 });
 
 // Dropdown search icon
@@ -165,7 +151,7 @@ function filterFunction(dropdownId, dropdownListId, btnClearSearch) {
   const filter = input.value.toUpperCase();
   const div = document.getElementById(dropdownListId);
   const a = div.getElementsByTagName("a");
-  const btnClearSearchDropdown = document.querySelector(btnClearSearch);
+  const btnClearSearchDropdown = btnClearSearch;
   const searchIngredients = dropdownId;
 
   if (filter.length > 2) {
@@ -208,8 +194,8 @@ btnGroupBtn.forEach((element) => {
 
 // DOM Element
 let dropdowns = document.querySelectorAll(".dropdown-menu__container ul");
-// Filtering by appliances, ustensils, ingredients on click event
 
+// Filtering by appliances, ustensils, ingredients on click event
 dropdowns.forEach((element) => {
   element.addEventListener("click", (e) => {
     let tagValue = e.target.textContent.toUpperCase();
