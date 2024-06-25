@@ -44,7 +44,6 @@ export function search() {
 
   for (let i = 0; i < tagsFiltersLength; i++) {
     const filter = filters[i];
-    const tagType = filter.type;
     const searchTags = filter.name;
 
     recipesToDisplay = recipesToDisplay.filter(
