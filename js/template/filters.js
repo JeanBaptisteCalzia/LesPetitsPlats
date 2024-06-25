@@ -86,6 +86,10 @@ function getTagsDOM(id, tagValue, currentIndex) {
   icon.setAttribute("class", "fa-solid fa-xmark");
   tags.appendChild(li);
 
+  // On click we remove tags and insert tagValue to the currentIndex of the list of dropdowns (Ingredients, appliances, ustensils)
+  // currentIndex: The starting position to insert;
+  // 0: instructs the splice() method to not delete any array elements;
+  // capitalizedTagValue : element to insert
   li.addEventListener("click", () => {
     if (id === "ingredients") {
       filterIngredientsRecipes.splice(currentIndex, 0, capitalizedTagValue);

@@ -11,8 +11,8 @@ import {
 export let originalRecipes = [...recipes];
 export let recipesToDisplay = [...originalRecipes];
 
-let mainSearch = []; // tableau de string
-export let filters = []; // tableau d'objets de type => { type: '', name: '' }
+let mainSearch = []; // Array of strings
+export let filters = []; // Array of objects => { type: '', name: '', index: '' }
 
 // DOM Elements
 const inputSearch = document.getElementById("search-recipes");
@@ -20,12 +20,10 @@ const btnSearch = document.querySelector(".btn-search");
 const btnClearSearch = document.querySelector(".btn-clear");
 
 export function search() {
-  // Vu qu'on est maintenant dans une unique fonction de recherche
-  // on peut commencer par réinitialiser la liste des recettes
+  // We initialized recipes
   recipesToDisplay = [...originalRecipes];
 
-  // Ensuite on filtre cette liste en fonction des termes recherchés
-  // dans la recherche principale
+  // We filter recipes according to the searched terms in the main search
   if (mainSearch.length > 0) {
     const mainSearchLength = mainSearch.length;
     for (let i = 0; i < mainSearchLength; i++) {
@@ -41,8 +39,7 @@ export function search() {
     }
   }
 
-  // Ensuite on filtre cette liste en fonction des termes recherchés
-  // dans la recherche avancée (par tags)
+  // We filter recipes according to the searched terms in advanced search (by tags)
   const tagsFiltersLength = filters.length;
 
   for (let i = 0; i < tagsFiltersLength; i++) {
@@ -103,7 +100,7 @@ export function refreshDisplay() {
   displayTags();
 }
 
-// Launch Search once page is loaded
+// Launch search once page is loaded
 search();
 
 // Search recipes on click
@@ -193,9 +190,10 @@ btnGroupBtn.forEach((element) => {
 });
 
 // DOM Element
+// We Select dropdowns ul container (Ingrédients, appliances, ustensils)
 let dropdowns = document.querySelectorAll(".dropdown-menu__container ul");
 
-// Filtering by appliances, ustensils, ingredients on click event
+// On click event : Filtering by appliances, ustensils, ingredients
 dropdowns.forEach((element) => {
   element.addEventListener("click", (e) => {
     let tagValue = e.target.textContent.toUpperCase();
