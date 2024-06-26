@@ -157,7 +157,6 @@ function filterFunction(dropdownId, dropdownListId, btnClearSearch) {
     btnClearSearchDropdown.addEventListener("click", (event) => {
       event.preventDefault();
       searchIngredients.value = "";
-      mainSearch = [];
       search();
     });
   } else {
