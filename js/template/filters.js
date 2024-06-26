@@ -1,4 +1,3 @@
-// import { recipes } from "../data/recipes.js";
 import { filters, recipesToDisplay, search } from "../pages/index.js";
 
 // Make the first letter of a string uppercase, the rest to lowercase
