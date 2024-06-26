@@ -91,17 +91,19 @@ function getTagsDOM(id, tagValue, currentIndex) {
   // 0: instructs the splice() method to not delete any array elements;
   // capitalizedTagValue : element to insert
   li.addEventListener("click", () => {
-    if (id === "ingredients") {
-      filterIngredientsRecipes.splice(currentIndex, 0, capitalizedTagValue);
+    let filterElementRecipes;
+    switch (id) {
+      case "ingredients":
+        filterElementRecipes = filterIngredientsRecipes;
+        break;
+      case "appliance":
+        filterElementRecipes = filterApplianceRecipes;
+        break;
+      case "ustensils":
+        filterElementRecipes = filterUstensilsRecipes;
+        break;
     }
-
-    if (id === "appliance") {
-      filterApplianceRecipes.splice(currentIndex, 0, capitalizedTagValue);
-    }
-
-    if (id === "ustensils") {
-      filterUstensilsRecipes.splice(currentIndex, 0, capitalizedTagValue);
-    }
+    filterElementRecipes.splice(currentIndex, 0, capitalizedTagValue);
 
     const filterIndex = filters.findIndex(
       (item) => item.type === id && item.name === tagValue
