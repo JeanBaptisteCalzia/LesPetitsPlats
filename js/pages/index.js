@@ -247,10 +247,37 @@ btnGroupBtn.forEach((element) => {
   element.addEventListener("click", (e) => {
     let dropDownMenu = e.target;
     let dropDownMenuContent = dropDownMenu.nextElementSibling;
-    dropDownMenuContent.classList.toggle("show");
-    dropDownMenu.classList.toggle("btn-open");
+    let OpenDropdownMenu = !dropDownMenuContent.classList.contains("show");
+
+    // First close all open dropdowns
+    closeOpenDropdown();
+
+    if (OpenDropdownMenu) {
+      // Open the clicked dropdown
+      dropDownMenuContent.classList.add("show");
+      dropDownMenu.classList.add("btn-open");
+    }
   });
 });
+
+function closeOpenDropdown() {
+  let openDropdown = document.querySelectorAll(
+    ".filters-content > .btn-group > .dropdown-menu"
+  );
+
+  openDropdown.forEach((dropdown) => {
+    dropdown.classList.remove("show");
+    dropdown.previousElementSibling.classList.remove("btn-open");
+  });
+}
+
+// Close Dropdown by clicking outside of them
+// document.addEventListener("click", (event) => {
+//   const isOutside = event.target;
+//   if (isOutside !== btnGroupBtn) {
+//     closeOpenDropdown();
+//   }
+// });
 
 // DOM Element
 // We Select dropdowns ul container (Ingrédients, appliances, ustensils)
