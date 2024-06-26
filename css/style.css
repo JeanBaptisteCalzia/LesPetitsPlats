@@ -10569,8 +10569,7 @@ main {
     .btn-group > .btn-group .dropdown-menu .btn {
       padding: 0.5rem; }
     .btn-group > .btn-group .dropdown-menu .btn-clear {
-      right: 2.5rem;
-      display: none; }
+      right: 2.5rem; }
   .btn-group > .btn-group:not(:first-child) > .btn, .btn-group > .btn-group:not(:last-child) > .btn {
     border-radius: 0.75rem;
     min-width: 100%; }
@@ -10709,5 +10708,21 @@ main {
     .tags .list-group-item .btn .badge i {
       color: black;
       font-size: 1.25rem; }
+
+.error-message {
+  color: #ff4e60;
+  font-size: 0.85rem;
+  display: block;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.8); }
+
+.filters .error-message {
+  color: #ff4e60;
+  font-size: 0.85rem;
+  display: block;
+  padding: 0.5rem;
+  background-color: #fff; }
 
 /*# sourceMappingURL=style.css.map */

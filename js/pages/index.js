@@ -65,10 +65,19 @@ export function search() {
 inputSearch.addEventListener("input", (event) => {
   let inputSearchValue = event.target.value.toUpperCase();
   mainSearch = [];
+
+  // We retrieve Error messages
+  const errorMessage = document.querySelectorAll("span.error-message");
+  // We delete error messages (span)
+  for (const [key, message] of Object.entries(errorMessage)) {
+    message.remove(errorMessage);
+  }
+
   if (inputSearchValue.length > 2) {
     const inputSearchValueArray = inputSearchValue.split(",");
     for (let i = 0; i < inputSearchValueArray.length; i++) {
       mainSearch.push(inputSearchValueArray[i].trim());
+      validateInput(inputSearchValue, "search-recipes");
     }
     btnClearSearch.style.display = "block";
   } else {
@@ -77,6 +86,25 @@ inputSearch.addEventListener("input", (event) => {
 
   search();
 });
+
+// Verify if when users search for recipes it's match the RegExp pattern
+function validateInput(wordToSearch, inputId) {
+  // prettier-ignore
+  const inputSearchRegExp = new RegExp(
+    /^[a-zA-Z,\s]+$/
+  );
+
+  if (!inputSearchRegExp.test(wordToSearch)) {
+    const newElement = document.createElement("span");
+    const contentSpanEmail =
+      "Vous devez entrer une recherche valide : De type groupe de mots. (Les espaces et virgules sont autorisés)";
+    newElement.setAttribute("class", "error-message");
+    newElement.textContent = contentSpanEmail;
+
+    const inputElement = document.getElementById(inputId);
+    inputElement.parentNode.parentNode.appendChild(newElement);
+  }
+}
 
 // Display numbers total of Recipes
 function totalRecipes() {
@@ -117,6 +145,13 @@ btnClearSearch.addEventListener("click", (event) => {
   btnClearSearch.style.display = "none";
   mainSearch = [];
   search();
+
+  // We retrieve Error messages
+  const errorMessage = document.querySelectorAll("header span.error-message");
+  // We delete error messages (span)
+  for (const [key, message] of Object.entries(errorMessage)) {
+    message.remove(errorMessage);
+  }
 });
 
 // DOM Element
@@ -126,10 +161,20 @@ let inputSearchFilters = document.querySelectorAll(
 // Input search dropdown
 inputSearchFilters.forEach((element) => {
   element.addEventListener("keyup", (e) => {
+    // We retrieve Error messages
+    const errorMessage = document.querySelectorAll(
+      ".filters span.error-message"
+    );
+    // We delete error messages (span)
+    for (const [key, message] of Object.entries(errorMessage)) {
+      message.remove(errorMessage);
+    }
+
+    let inputSearchVal = e.target.value.toUpperCase();
     let inputSearch = e.target;
     let inputSearchId = e.currentTarget.dataset.input;
     const inputSearchBtnclear = inputSearch.nextElementSibling;
-
+    validateInput(inputSearchVal, inputSearchId);
     filterFunction(inputSearch, inputSearchId, inputSearchBtnclear);
   });
 });
@@ -150,19 +195,37 @@ function filterFunction(dropdownId, dropdownListId, btnClearSearch) {
   const div = document.getElementById(dropdownListId);
   const a = div.getElementsByTagName("a");
   const btnClearSearchDropdown = btnClearSearch;
-  const searchIngredients = dropdownId;
+  const searchFilters = dropdownId;
 
-  if (filter.length > 2) {
+  if (filter.length > 0) {
     btnClearSearchDropdown.style.display = "block";
 
     // Clear input search value on click
     btnClearSearchDropdown.addEventListener("click", (event) => {
       event.preventDefault();
-      searchIngredients.value = "";
+      searchFilters.value = "";
+      div.innerHTML = "";
       search();
+
+      // We retrieve Error messages
+      const errorMessage = document.querySelectorAll(
+        ".filters span.error-message"
+      );
+      // We delete error messages (span)
+      for (const [key, message] of Object.entries(errorMessage)) {
+        message.remove(errorMessage);
+      }
     });
   } else {
     btnClearSearchDropdown.style.display = "none";
+    // We retrieve Error messages
+    const errorMessage = document.querySelectorAll(
+      ".filters span.error-message"
+    );
+    // We delete error messages (span)
+    for (const [key, message] of Object.entries(errorMessage)) {
+      message.remove(errorMessage);
+    }
   }
 
   for (i = 0; i < a.length; i++) {
@@ -177,7 +240,7 @@ function filterFunction(dropdownId, dropdownListId, btnClearSearch) {
 
 // DOM Element
 let btnGroupBtn = document.querySelectorAll(
-  ".filters-content .btn-group button"
+  ".filters-content > .btn-group > button"
 );
 // Dropdown menu filters tags
 btnGroupBtn.forEach((element) => {
