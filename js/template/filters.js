@@ -1,18 +1,5 @@
-import { recipes } from "../data/recipes.js";
-import { filters, search } from "../pages/index.js";
-
-// Retrieve Appliance elements
-const applianceRecipe = recipes.map((appliance) => appliance.appliance);
-
-// Retrieve Ustencils elements
-const ustensilsRecipe = recipes.map((ustensil) => ustensil.ustensils);
-const mergeUstensilsRecipe = ustensilsRecipe.flat(1); // The depth level specifying how deep a nested array structure should be flattened. Defaults to 1.
-
-// Retrieve Ingredients elements
-const ingredientsRecipe = recipes.map((ingredient) => ingredient.ingredients);
-const ingredientsRecipeOnly = ingredientsRecipe
-  .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
-  .map((ingredient) => ingredient.ingredient);
+// import { recipes } from "../data/recipes.js";
+import { filters, recipesToDisplay, search } from "../pages/index.js";
 
 // Make the first letter of a string uppercase, the rest to lowercase
 function capitalizeFirstLetter(filter) {
@@ -24,14 +11,40 @@ function capitalizeFirstLetter(filter) {
   return newArray;
 }
 
-const filterAppliance = capitalizeFirstLetter(applianceRecipe);
-const filterUstensils = capitalizeFirstLetter(mergeUstensilsRecipe);
-const filterIngredients = capitalizeFirstLetter(ingredientsRecipeOnly);
+// We initialize dropdowns filters array
+export let filterApplianceRecipes = [];
+export let filterUstensilsRecipes = [];
+export let filterIngredientsRecipes = [];
 
-// Remove duplicate elements inside an array
-export const filterApplianceRecipes = [...new Set(filterAppliance)];
-export const filterUstensilsRecipes = [...new Set(filterUstensils)];
-export const filterIngredientsRecipes = [...new Set(filterIngredients)];
+export function initialiseFilters() {
+  // Retrieve Appliance elements
+  const applianceRecipe = recipesToDisplay.map(
+    (appliance) => appliance.appliance
+  );
+
+  // Retrieve Ustencils elements
+  const ustensilsRecipe = recipesToDisplay.map(
+    (ustensil) => ustensil.ustensils
+  );
+  const mergeUstensilsRecipe = ustensilsRecipe.flat(1); // The depth level specifying how deep a nested array structure should be flattened. Defaults to 1.
+
+  // Retrieve Ingredients elements
+  const ingredientsRecipe = recipesToDisplay.map(
+    (ingredient) => ingredient.ingredients
+  );
+  const ingredientsRecipeOnly = ingredientsRecipe
+    .reduce((accumulator, currentValue) => accumulator.concat(currentValue), [])
+    .map((ingredient) => ingredient.ingredient);
+
+  const filterIngredients = capitalizeFirstLetter(ingredientsRecipeOnly);
+  const filterAppliance = capitalizeFirstLetter(applianceRecipe);
+  const filterUstensils = capitalizeFirstLetter(mergeUstensilsRecipe);
+
+  // Remove duplicate elements inside an array
+  filterApplianceRecipes = [...new Set(filterAppliance)];
+  filterUstensilsRecipes = [...new Set(filterUstensils)];
+  filterIngredientsRecipes = [...new Set(filterIngredients)];
+}
 
 // Filters template
 export function getFiltersDOM(id, array) {

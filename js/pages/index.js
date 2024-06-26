@@ -6,6 +6,7 @@ import {
   filterUstensilsRecipes,
   filterIngredientsRecipes,
   filterApplianceRecipes,
+  initialiseFilters,
 } from "../template/filters.js";
 
 export let originalRecipes = [...recipes];
@@ -92,6 +93,7 @@ export function refreshDisplay() {
   displayData(recipesToDisplay, mainSearch.toString());
   totalRecipes();
   // Display Filters Dropdown
+  initialiseFilters();
   displayFiltersData("ingredients", filterIngredientsRecipes);
   displayFiltersData("appliance", filterApplianceRecipes);
   displayFiltersData("ustensils", filterUstensilsRecipes);
