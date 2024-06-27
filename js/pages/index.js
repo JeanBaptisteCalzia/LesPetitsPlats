@@ -91,7 +91,7 @@ inputSearch.addEventListener("input", (event) => {
 function validateInput(wordToSearch, inputId) {
   // prettier-ignore
   const inputSearchRegExp = new RegExp(
-    /^[a-zA-Z,\s]+$/
+    /^[a-zA-ZÀ-Ÿ,\s]*$/
   );
 
   if (!inputSearchRegExp.test(wordToSearch)) {
