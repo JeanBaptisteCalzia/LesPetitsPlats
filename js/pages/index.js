@@ -271,14 +271,6 @@ function closeOpenDropdown() {
   });
 }
 
-// Close Dropdown by clicking outside of them
-// document.addEventListener("click", (event) => {
-//   const isOutside = event.target;
-//   if (isOutside !== btnGroupBtn) {
-//     closeOpenDropdown();
-//   }
-// });
-
 // DOM Element
 // We Select dropdowns ul container (Ingrédients, appliances, ustensils)
 let dropdowns = document.querySelectorAll(".dropdown-menu__container ul");
@@ -309,7 +301,6 @@ dropdowns.forEach((element) => {
 
     filters.push({ type: tagType, name: tagValue, index: tagIndex });
     filterElementRecipes.splice(tagIndex, 1);
-
     search();
   });
 });
