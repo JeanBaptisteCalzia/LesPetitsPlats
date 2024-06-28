@@ -27,7 +27,7 @@ export function recipeTemplate(data) {
   // Remove Undefined Values from Objects
   function cleanData(data) {
     const cleanData = Object.entries(data)
-      .filter(([key, value]) => value !== undefined)
+      .filter(([value]) => value !== undefined)
       .reduce((obj, [key, value]) => {
         obj[key] = value;
         return obj;

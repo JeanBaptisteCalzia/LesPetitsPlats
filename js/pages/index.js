@@ -69,7 +69,7 @@ inputSearch.addEventListener("input", (event) => {
   // We retrieve Error messages
   const errorMessage = document.querySelectorAll("span.error-message");
   // We delete error messages (span)
-  for (const [key, message] of Object.entries(errorMessage)) {
+  for (const [message] of Object.entries(errorMessage)) {
     message.remove(errorMessage);
   }
 
@@ -149,7 +149,7 @@ btnClearSearch.addEventListener("click", (event) => {
   // We retrieve Error messages
   const errorMessage = document.querySelectorAll("header span.error-message");
   // We delete error messages (span)
-  for (const [key, message] of Object.entries(errorMessage)) {
+  for (const [message] of Object.entries(errorMessage)) {
     message.remove(errorMessage);
   }
 });
@@ -166,7 +166,7 @@ inputSearchFilters.forEach((element) => {
       ".filters span.error-message"
     );
     // We delete error messages (span)
-    for (const [key, message] of Object.entries(errorMessage)) {
+    for (const [message] of Object.entries(errorMessage)) {
       message.remove(errorMessage);
     }
 
@@ -212,7 +212,7 @@ function filterFunction(dropdownId, dropdownListId, btnClearSearch) {
         ".filters span.error-message"
       );
       // We delete error messages (span)
-      for (const [key, message] of Object.entries(errorMessage)) {
+      for (const [message] of Object.entries(errorMessage)) {
         message.remove(errorMessage);
       }
     });
@@ -223,7 +223,7 @@ function filterFunction(dropdownId, dropdownListId, btnClearSearch) {
       ".filters span.error-message"
     );
     // We delete error messages (span)
-    for (const [key, message] of Object.entries(errorMessage)) {
+    for (const [message] of Object.entries(errorMessage)) {
       message.remove(errorMessage);
     }
   }
