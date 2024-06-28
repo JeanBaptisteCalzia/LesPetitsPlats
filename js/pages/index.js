@@ -26,9 +26,8 @@ export function search() {
 
   // We filter recipes according to the searched terms in the main search
   if (mainSearch.length > 0) {
-    const mainSearchLength = mainSearch.length;
-    for (let i = 0; i < mainSearchLength; i++) {
-      const searchTerm = mainSearch[i];
+    mainSearch.forEach((element) => {
+      const searchTerm = element;
       recipesToDisplay = recipesToDisplay.filter(
         (recipe) =>
           recipe.name.toUpperCase().includes(searchTerm) ||
@@ -37,7 +36,7 @@ export function search() {
             item.ingredient.toUpperCase().includes(searchTerm)
           )
       );
-    }
+    });
   }
 
   // We filter recipes according to the searched terms in advanced search (by tags)
