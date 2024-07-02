@@ -69,7 +69,7 @@ inputSearch.addEventListener("input", (event) => {
   // We retrieve Error messages
   const errorMessage = document.querySelectorAll("span.error-message");
   // We delete error messages (span)
-  for (const [message] of Object.entries(errorMessage)) {
+  for (let message of Object.values(errorMessage)) {
     message.remove(errorMessage);
   }
 
