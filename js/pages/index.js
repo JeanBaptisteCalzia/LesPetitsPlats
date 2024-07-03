@@ -278,25 +278,27 @@ let dropdowns = document.querySelectorAll(".dropdown-menu__container ul");
 // On click event : Filtering by appliances, ustensils, ingredients
 dropdowns.forEach((element) => {
   element.addEventListener("click", (e) => {
-    let tagValue = e.target.textContent.toUpperCase();
-    let tagType = e.currentTarget.dataset.id;
+    if (e.target.tagName === "A") {
+      let tagValue = e.target.textContent.toUpperCase();
+      let tagType = e.currentTarget.dataset.id;
 
-    let filterElementRecipes;
-    switch (tagType) {
-      case "ingredients":
-        filterElementRecipes = filterIngredientsRecipes;
-        break;
-      case "appliance":
-        filterElementRecipes = filterApplianceRecipes;
-        break;
-      case "ustensils":
-        filterElementRecipes = filterUstensilsRecipes;
-        break;
+      let filterElementRecipes;
+      switch (tagType) {
+        case "ingredients":
+          filterElementRecipes = filterIngredientsRecipes;
+          break;
+        case "appliance":
+          filterElementRecipes = filterApplianceRecipes;
+          break;
+        case "ustensils":
+          filterElementRecipes = filterUstensilsRecipes;
+          break;
+      }
+
+      filterElementRecipes.map((item) => item.toUpperCase());
+
+      filters.push({ type: tagType, name: tagValue });
+      search();
     }
-
-    filterElementRecipes.map((item) => item.toUpperCase());
-
-    filters.push({ type: tagType, name: tagValue });
-    search();
   });
 });
