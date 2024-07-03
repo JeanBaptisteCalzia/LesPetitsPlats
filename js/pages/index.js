@@ -13,7 +13,7 @@ export let originalRecipes = [...recipes];
 export let recipesToDisplay = [...originalRecipes];
 
 let mainSearch = []; // Array of strings
-export let filters = []; // Array of objects => { type: '', name: '', index: '' }
+export let filters = []; // Array of objects => { type: '', name: '' }
 
 // DOM Elements
 const inputSearch = document.getElementById("search-recipes");
