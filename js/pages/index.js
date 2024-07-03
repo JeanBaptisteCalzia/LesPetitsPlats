@@ -13,7 +13,7 @@ export let originalRecipes = [...recipes];
 export let recipesToDisplay = [...originalRecipes];
 
 let mainSearch = []; // Array of strings
-export let filters = []; // Array of objects => { type: '', name: '', index: '' }
+export let filters = []; // Array of objects => { type: '', name: '' }
 
 // DOM Elements
 const inputSearch = document.getElementById("search-recipes");
@@ -293,13 +293,9 @@ dropdowns.forEach((element) => {
         break;
     }
 
-    const dropdownArray = filterElementRecipes.map((item) =>
-      item.toUpperCase()
-    );
-    let tagIndex = dropdownArray.indexOf(tagValue);
+    filterElementRecipes.map((item) => item.toUpperCase());
 
-    filters.push({ type: tagType, name: tagValue, index: tagIndex });
-    filterElementRecipes.splice(tagIndex, 1);
+    filters.push({ type: tagType, name: tagValue });
     search();
   });
 });
