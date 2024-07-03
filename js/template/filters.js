@@ -54,12 +54,20 @@ export function getFiltersDOM(id, array) {
   listDropdown.innerHTML = "";
 
   for (let i = 0; i < numberOfLi; i++) {
-    const list = document.createElement("li");
-    const link = document.createElement("a");
-    link.setAttribute("class", "dropdown-item");
-    link.textContent = array[i];
-    list.appendChild(link);
-    wrapper.appendChild(list);
+    // If filters do not contain this element (id + array[i])
+    // we add this element inside dropdown list
+    if (
+      !filters.some(
+        (filter) => filter.type === id && filter.name === array[i].toUpperCase()
+      )
+    ) {
+      const list = document.createElement("li");
+      const link = document.createElement("a");
+      link.setAttribute("class", "dropdown-item");
+      link.textContent = array[i];
+      list.appendChild(link);
+      wrapper.appendChild(list);
+    }
   }
 
   return wrapper;
@@ -73,7 +81,7 @@ export function displayFiltersData(id, array) {
 }
 
 // Tags template
-function getTagsDOM(id, tagValue, currentIndex) {
+function getTagsDOM(id, tagValue) {
   const wrapper = document.getElementById(id);
   const tags = document.querySelector(".tags ul");
   const btn = document.createElement("button");
@@ -115,7 +123,6 @@ function getTagsDOM(id, tagValue, currentIndex) {
         filterElementRecipes = filterUstensilsRecipes;
         break;
     }
-    filterElementRecipes.splice(currentIndex, 0, capitalizedTagValue);
 
     const filterIndex = filters.findIndex(
       (item) => item.type === id && item.name === tagValue
@@ -136,6 +143,6 @@ export function displayTags() {
   tagsSection.innerHTML = "";
 
   filters.forEach((filter) => {
-    getTagsDOM(filter.type, filter.name, filter.index);
+    getTagsDOM(filter.type, filter.name);
   });
 }

@@ -294,13 +294,9 @@ dropdowns.forEach((element) => {
         break;
     }
 
-    const dropdownArray = filterElementRecipes.map((item) =>
-      item.toUpperCase()
-    );
-    let tagIndex = dropdownArray.indexOf(tagValue);
+    filterElementRecipes.map((item) => item.toUpperCase());
 
-    filters.push({ type: tagType, name: tagValue, index: tagIndex });
-    filterElementRecipes.splice(tagIndex, 1);
+    filters.push({ type: tagType, name: tagValue });
     search();
   });
 });
