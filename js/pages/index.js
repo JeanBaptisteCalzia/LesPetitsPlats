@@ -88,6 +88,7 @@ inputSearch.addEventListener("input", (event) => {
     btnClearSearch.style.display = "block";
   } else {
     btnClearSearch.style.display = "none";
+    search();
   }
 });
 
@@ -98,7 +99,7 @@ function validateInput(wordToSearch, inputId) {
     /^[a-zA-ZÀ-Ÿ,\s]*$/
   );
 
-  if (inputSearchRegExp.test(wordToSearch) == false) {
+  if (!inputSearchRegExp.test(wordToSearch)) {
     // We retrieve Error messages
     const errorMessage = document.querySelectorAll("span.error-message");
     // We delete error messages (span)
