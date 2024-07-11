@@ -79,12 +79,16 @@ inputSearch.addEventListener("input", (event) => {
       mainSearch.push(inputSearchValueArray[i].trim());
       validateInput(inputSearchValue, "search-recipes");
     }
+    if (validateInput(inputSearchValue, "search-recipes") === true) {
+      search();
+    } else {
+      recipesToDisplay = [];
+      refreshDisplay();
+    }
     btnClearSearch.style.display = "block";
   } else {
     btnClearSearch.style.display = "none";
   }
-
-  search();
 });
 
 // Verify if when users search for recipes it's match the RegExp pattern
@@ -94,7 +98,14 @@ function validateInput(wordToSearch, inputId) {
     /^[a-zA-ZÀ-Ÿ,\s]*$/
   );
 
-  if (!inputSearchRegExp.test(wordToSearch)) {
+  if (inputSearchRegExp.test(wordToSearch) == false) {
+    // We retrieve Error messages
+    const errorMessage = document.querySelectorAll("span.error-message");
+    // We delete error messages (span)
+    for (let message of Object.values(errorMessage)) {
+      message.remove(errorMessage);
+    }
+
     const newElement = document.createElement("span");
     const contentSpanEmail =
       "Vous devez entrer une recherche valide : De type groupe de mots. (Les espaces et virgules sont autorisés)";
@@ -103,7 +114,9 @@ function validateInput(wordToSearch, inputId) {
 
     const inputElement = document.getElementById(inputId);
     inputElement.parentNode.parentNode.appendChild(newElement);
+    return false;
   }
+  return true;
 }
 
 // Display numbers total of Recipes
