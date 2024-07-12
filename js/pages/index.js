@@ -26,17 +26,22 @@ export function search() {
 
   // We filter recipes according to the searched terms in the main search
   if (mainSearch.length > 0) {
-    mainSearch.forEach((element) => {
-      const searchTerm = element;
-      recipesToDisplay = recipesToDisplay.filter(
-        (recipe) =>
-          recipe.name.toUpperCase().includes(searchTerm) ||
-          recipe.description.toUpperCase().includes(searchTerm) ||
-          recipe.ingredients.some((item) =>
-            item.ingredient.toUpperCase().includes(searchTerm)
-          )
-      );
+    const newRecipeToDisplay = [];
+
+    // For each recipe, check if it contains the search term
+    recipesToDisplay.forEach((element) => {
+      const searchTerm = mainSearch;
+      if (
+        element.name.toUpperCase().includes(searchTerm) ||
+        element.description.toUpperCase().includes(searchTerm) ||
+        element.ingredients.some((item) =>
+          item.ingredient.toUpperCase().includes(searchTerm)
+        )
+      ) {
+        newRecipeToDisplay.push(element);
+      }
     });
+    recipesToDisplay = newRecipeToDisplay;
   }
 
   // We filter recipes according to the searched terms in advanced search (by tags)
@@ -78,12 +83,17 @@ inputSearch.addEventListener("input", (event) => {
       mainSearch.push(inputSearchValueArray[i].trim());
       validateInput(inputSearchValue, "search-recipes");
     }
+    if (validateInput(inputSearchValue, "search-recipes") === true) {
+      search();
+    } else {
+      recipesToDisplay = [];
+      refreshDisplay();
+    }
     btnClearSearch.style.display = "block";
   } else {
     btnClearSearch.style.display = "none";
+    search();
   }
-
-  search();
 });
 
 // Verify if when users search for recipes it's match the RegExp pattern
@@ -94,6 +104,13 @@ function validateInput(wordToSearch, inputId) {
   );
 
   if (!inputSearchRegExp.test(wordToSearch)) {
+    // We retrieve Error messages
+    const errorMessage = document.querySelectorAll("span.error-message");
+    // We delete error messages (span)
+    for (let message of Object.values(errorMessage)) {
+      message.remove(errorMessage);
+    }
+
     const newElement = document.createElement("span");
     const contentSpanEmail =
       "Vous devez entrer une recherche valide : De type groupe de mots. (Les espaces et virgules sont autorisés)";
@@ -102,7 +119,9 @@ function validateInput(wordToSearch, inputId) {
 
     const inputElement = document.getElementById(inputId);
     inputElement.parentNode.parentNode.appendChild(newElement);
+    return false;
   }
+  return true;
 }
 
 // Display numbers total of Recipes
