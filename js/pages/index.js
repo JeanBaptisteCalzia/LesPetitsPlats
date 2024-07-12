@@ -26,18 +26,28 @@ export function search() {
 
   // We filter recipes according to the searched terms in the main search
   if (mainSearch.length > 0) {
+    const recipesToDisplayLength = recipesToDisplay.length;
     const mainSearchLength = mainSearch.length;
-    for (let i = 0; i < mainSearchLength; i++) {
-      const searchTerm = mainSearch[i];
-      recipesToDisplay = recipesToDisplay.filter(
-        (recipe) =>
+    const newRecipeToDisplay = [];
+
+    // For each recipe, check if it contains the search term
+    for (let i = 0; i < recipesToDisplayLength; i++) {
+      const recipe = recipesToDisplay[i];
+
+      for (let j = 0; j < mainSearchLength; j++) {
+        const searchTerm = mainSearch[j];
+        if (
           recipe.name.toUpperCase().includes(searchTerm) ||
           recipe.description.toUpperCase().includes(searchTerm) ||
           recipe.ingredients.some((item) =>
             item.ingredient.toUpperCase().includes(searchTerm)
           )
-      );
+        ) {
+          newRecipeToDisplay.push(recipe);
+        }
+      }
     }
+    recipesToDisplay = newRecipeToDisplay;
   }
 
   // We filter recipes according to the searched terms in advanced search (by tags)
