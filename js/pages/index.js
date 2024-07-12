@@ -47,7 +47,7 @@ export function search() {
         }
       }
     }
-    recipesToDisplay = newRecipeToDisplay;
+    recipesToDisplay = [...new Set(newRecipeToDisplay)];
   }
 
   // We filter recipes according to the searched terms in advanced search (by tags)
